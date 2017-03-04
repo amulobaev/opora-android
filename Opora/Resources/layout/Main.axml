@@ -1,13 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-<Button  
-    android:id="@+id/MyButton"
-    android:layout_width="match_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/Hello"
-    />
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+  <!-- Марка опоры -->
+  <TextView
+      android:id="@+id/label1"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Марка опоры:" />
+  <EditText
+      android:id="@+id/entry1"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label1"
+      android:textColor="#000" />
+  <!-- Высота опоры -->
+  <TextView
+      android:id="@+id/label2"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Высота опоры, м:"
+      android:layout_below="@id/entry1" />
+  <EditText
+      android:id="@+id/entry2"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label2"
+      android:textColor="#000" />
+  <!-- Конусность опоры -->
+  <TextView
+      android:id="@+id/label3"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Конусность опоры:"
+      android:layout_below="@id/entry2" />
+  <EditText
+      android:id="@+id/entry3"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label3"
+      android:textColor="#000" />
+  <!-- Первое измерение -->
+  <TextView
+      android:id="@+id/label4"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Первое измерение, м:"
+      android:layout_below="@id/entry3" />
+  <EditText
+      android:id="@+id/entry4"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label4"
+      android:textColor="#000" />
+  <!-- Второе измерение -->
+  <TextView
+      android:id="@+id/label5"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Второе измерение, м:"
+      android:layout_below="@id/entry4" />
+  <EditText
+      android:id="@+id/entry5"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label5"
+      android:textColor="#000" />
+  <!-- Расчёт -->
+  <Button
+      android:id="@+id/MyButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/entry5"
+      android:text="Расчёт" />
+  <!-- Угол наклона -->
+  <TextView
+      android:id="@+id/label6"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Угол наклона:"
+      android:layout_below="@id/MyButton" />
+  <EditText
+      android:id="@+id/entry6"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label6"
+      android:textColor="#000" />
+  <!-- Процентное соотношение -->
+  <TextView
+      android:id="@+id/label7"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Процентное соотношение, %:"
+      android:layout_below="@id/entry6" />
+  <EditText
+      android:id="@+id/entry7"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:drawable/editbox_background"
+      android:layout_below="@id/label7"
+      android:textColor="#000" />
+</RelativeLayout>
