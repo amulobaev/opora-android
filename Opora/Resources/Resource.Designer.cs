@@ -105,6 +105,9 @@ namespace Opora
 			// aapt resource value: 0x7f05000d
 			public const int label7 = 2131034125;
 			
+			// aapt resource value: 0x7f05000f
+			public const int label8 = 2131034127;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
