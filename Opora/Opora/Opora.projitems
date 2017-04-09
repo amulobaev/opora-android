@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>{d14b9769-b512-4484-a04c-dc220587ad85}</SharedGUID>
+    <SharedGUID>{79ef2c96-5cd4-409b-9e29-f7d5e31f1ac9}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Opora</Import_RootNamespace>
