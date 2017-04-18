@@ -12,26 +12,29 @@ namespace Opora.ViewModels
 {
 	public class PillarsViewModel : BaseViewModel
 	{
+        public ObservableRangeCollection<Pillar> Items { get; set; }
+
+        public Command LoadItemsCommand { get; set; }
+
         /// <summary>
         /// Конструктор
         /// </summary>
 		public PillarsViewModel()
 		{
 			Title = "Опоры";
-			Items = new ObservableRangeCollection<Measurement>();
+			Items = new ObservableRangeCollection<Pillar>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-			MessagingCenter.Subscribe<NewItemPage, Measurement>(this, "AddItem", async (obj, item) =>
+            Items.Add(new Pillar { Name = "Опора 1", Height = 1, Taper = 2 });
+
+            MessagingCenter.Subscribe<EditPillarPage, Pillar>(this, "AddItem", (obj, item) =>
 			{
-				var _item = item as Measurement;
+				var _item = item as Pillar;
 				Items.Add(_item);
-				await DataStore.AddItemAsync(_item);
+                //App.Current.MainPage.DisplayAlert("Test Title", "Test", "OK");
+				//await DataStore.AddItemAsync(_item);
 			});
 		}
-
-        public ObservableRangeCollection<Measurement> Items { get; set; }
-
-        public Command LoadItemsCommand { get; set; }
 
         async Task ExecuteLoadItemsCommand()
 		{
@@ -43,8 +46,8 @@ namespace Opora.ViewModels
 			try
 			{
 				Items.Clear();
-				var items = await DataStore.GetItemsAsync(true);
-				Items.ReplaceRange(items);
+				//var items = await DataStore.GetItemsAsync(true);
+				//Items.ReplaceRange(items);
 			}
 			catch (Exception ex)
 			{

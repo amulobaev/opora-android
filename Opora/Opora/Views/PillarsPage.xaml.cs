@@ -44,7 +44,7 @@ namespace Opora.Views
             Pillar newItem = new Pillar
             {
                 //Id = Guid.NewGuid(),
-
+                Name = "Новая опора"
             };
             var view = new EditPillarPage(new EditPillarViewModel(newItem));
             await Navigation.PushAsync(view);

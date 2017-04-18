@@ -8,7 +8,7 @@ namespace Opora.ViewModels
 
         public EditMeasureViewModel(Measurement item = null)
 		{
-			Title = item.Text;
+			Title = "Замер";
 			Item = item;
 		}
 

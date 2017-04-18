@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 
 using Opora.ViewModels;
+using Opora.Models;
 
 namespace Opora.Views
 {
@@ -24,7 +25,8 @@ namespace Opora.Views
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            //MessagingCenter.Send(this, "AddItem", Item);
+            Pillar pillar = new Pillar { Name = viewModel.Name };
+            MessagingCenter.Send(this, "AddItem", pillar);
             await Navigation.PopToRootAsync();
         }
     }

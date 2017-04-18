@@ -9,11 +9,11 @@
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Марка опоры" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" FontSize="Small" />
+            <Entry Text="{Binding Name}" FontSize="Small" />
             <Label Text="Высота опоры" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
+            <Editor Text="{Binding Height}" FontSize="Small" Margin="0" />
             <Label Text="Конусность опоры" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
+            <Editor Text="{Binding Taper}" FontSize="Small" Margin="0" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
