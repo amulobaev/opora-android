@@ -7,24 +7,28 @@ using Opora.ViewModels;
 
 namespace Opora.Views
 {
-	public partial class ItemsPage : ContentPage
+	public partial class PillarsPage : ContentPage
 	{
-		ItemsViewModel viewModel;
+		PillarsViewModel viewModel;
 
-		public ItemsPage()
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+		public PillarsPage()
 		{
 			InitializeComponent();
 
-			BindingContext = viewModel = new ItemsViewModel();
+			BindingContext = viewModel = new PillarsViewModel();
 		}
 
 		async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
 		{
-			var item = args.SelectedItem as Measurement;
+			var item = args.SelectedItem as Pillar;
 			if (item == null)
 				return;
 
-			await Navigation.PushAsync(new ItemDetailPage(new EditMeasureViewModel(item)));
+            var page = new EditPillarPage(new EditPillarViewModel(item));
+            await Navigation.PushAsync(page);
 
 			// Manually deselect item
 			ItemsListView.SelectedItem = null;
@@ -37,11 +41,12 @@ namespace Opora.Views
         /// <param name="e"></param>
 		async void AddItem_Clicked(object sender, EventArgs e)
 		{
-            Measurement newItem = new Measurement
+            Pillar newItem = new Pillar
             {
                 //Id = Guid.NewGuid(),
+
             };
-            var view = new ItemDetailPage(new EditMeasureViewModel(newItem));
+            var view = new EditPillarPage(new EditPillarViewModel(newItem));
             await Navigation.PushAsync(view);
 		}
 

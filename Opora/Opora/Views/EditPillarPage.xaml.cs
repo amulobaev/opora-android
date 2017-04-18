@@ -5,17 +5,17 @@ using Opora.ViewModels;
 
 namespace Opora.Views
 {
-	public partial class ItemDetailPage : ContentPage
+	public partial class EditPillarPage : ContentPage
 	{
-        EditMeasureViewModel viewModel;
+        EditPillarViewModel viewModel;
 
         // Note - The Xamarin.Forms Previewer requires a default, parameterless constructor to render a page.
-        public ItemDetailPage()
+        public EditPillarPage()
         {
             InitializeComponent();
         }
 
-        public ItemDetailPage(EditMeasureViewModel viewModel)
+        public EditPillarPage(EditPillarViewModel viewModel)
 		{
 			InitializeComponent();
 

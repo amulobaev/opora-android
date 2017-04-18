@@ -1,8 +1,8 @@
-﻿using Opora.Helpers;
+﻿using Xamarin.Forms;
+
+using Opora.Helpers;
 using Opora.Models;
 using Opora.Services;
-
-using Xamarin.Forms;
 
 namespace Opora.ViewModels
 {
@@ -11,7 +11,7 @@ namespace Opora.ViewModels
 		/// <summary>
 		/// Get the azure service instance
 		/// </summary>
-		public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+		public IDataStore<Measurement> DataStore => DependencyService.Get<IDataStore<Measurement>>();
 
 		bool isBusy = false;
 		public bool IsBusy
@@ -33,4 +33,3 @@ namespace Opora.ViewModels
 		}
 	}
 }
-

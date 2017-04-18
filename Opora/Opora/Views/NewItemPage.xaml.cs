@@ -1,21 +1,21 @@
 ﻿using System;
 
-using Opora.Models;
-
 using Xamarin.Forms;
+
+using Opora.Models;
 
 namespace Opora.Views
 {
 	public partial class NewItemPage : ContentPage
 	{
-		public Item Item { get; set; }
+		public Measurement Item { get; set; }
 
 		public NewItemPage()
 		{
 			InitializeComponent();
 
-			Item = new Item
-			{
+			Item = new Measurement
+            {
 				Text = "Item name",
 				Description = "This is a nice description"
 			};

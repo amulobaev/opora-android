@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Opora.Views.ItemsPage"
+             x:Class="Opora.Views.PillarsPage"
               Title="{Binding Title}"
              x:Name="BrowseItemsPage">
   <ContentPage.ToolbarItems>
-  	<ToolbarItem Text="Добавить замер" Clicked="AddItem_Clicked" />
+  	<ToolbarItem Text="Добавить опору" Clicked="AddItem_Clicked" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <StackLayout>
@@ -22,14 +22,10 @@
           <DataTemplate>
             <ViewCell>
               <StackLayout Padding="10">
-                <Label Text="{Binding Text}"
+                <Label Text="{Binding Name}"
                        LineBreakMode="NoWrap"
                        Style="{DynamicResource ListItemTextStyle}"
                        FontSize="16"/>
-                <Label Text="{Binding Description}"
-                       LineBreakMode="NoWrap"
-                       Style="{DynamicResource ListItemDetailTextStyle}"
-                       FontSize="13"/>
               </StackLayout>
             </ViewCell>
           </DataTemplate>

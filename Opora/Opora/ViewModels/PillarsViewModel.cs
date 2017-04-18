@@ -10,14 +10,14 @@ using Opora.Views;
 
 namespace Opora.ViewModels
 {
-	public class ItemsViewModel : BaseViewModel
+	public class PillarsViewModel : BaseViewModel
 	{
         /// <summary>
         /// Конструктор
         /// </summary>
-		public ItemsViewModel()
+		public PillarsViewModel()
 		{
-			Title = "Замеры";
+			Title = "Опоры";
 			Items = new ObservableRangeCollection<Measurement>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
