@@ -10,9 +10,9 @@
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Марка опоры" FontSize="Medium" />
             <Entry Text="{Binding Name}" FontSize="Small" />
-            <Label Text="Высота опоры" FontSize="Medium" />
+            <Label Text="Высота опоры, м" FontSize="Medium" />
             <Editor Text="{Binding Height}" FontSize="Small" Margin="0" />
-            <Label Text="Конусность опоры" FontSize="Medium" />
+            <Label Text="Конусность опоры, см" FontSize="Medium" />
             <Editor Text="{Binding Taper}" FontSize="Small" Margin="0" />
         </StackLayout>
     </ContentPage.Content>

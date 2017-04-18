@@ -10,12 +10,12 @@ using Opora.Views;
 
 namespace Opora.ViewModels
 {
-	public class ItemsViewModel : BaseViewModel
+	public class MeasurementsViewModel : BaseViewModel
 	{
         /// <summary>
         /// Конструктор
         /// </summary>
-		public ItemsViewModel()
+		public MeasurementsViewModel()
 		{
 			Title = "Замеры";
 			Items = new ObservableRangeCollection<Measurement>();

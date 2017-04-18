@@ -2,11 +2,11 @@
 
 namespace Opora.ViewModels
 {
-	public class EditMeasureViewModel : BaseViewModel
+	public class EditMeasurementViewModel : BaseViewModel
 	{
         int quantity = 1;
 
-        public EditMeasureViewModel(Measurement item = null)
+        public EditMeasurementViewModel(Measurement item = null)
 		{
 			Title = "Замер";
 			Item = item;

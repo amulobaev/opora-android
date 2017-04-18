@@ -21,7 +21,7 @@ namespace Opora
             {
                 Children =
                 {
-                    new NavigationPage(new ItemsPage())
+                    new NavigationPage(new MeasurementsPage())
                     {
                         Title = "Замеры",
                         Icon = Device.OnPlatform<string>("tab_feed.png",null,null)
