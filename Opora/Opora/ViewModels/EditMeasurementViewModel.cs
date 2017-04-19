@@ -6,12 +6,15 @@ using GalaSoft.MvvmLight.Command;
 using Xamarin.Forms;
 
 using Opora.Models;
+using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+using System.Linq.Expressions;
 
 namespace Opora.ViewModels
 {
     public class EditMeasurementViewModel : PageViewModel
     {
-        private string _h;
+        private string _height;
         private string _x;
         private string _h1;
         private string _h2;
@@ -19,6 +22,7 @@ namespace Opora.ViewModels
 
         private ICommand _saveCommand;
         private ICommand _calculateCommand;
+        private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
 
         public EditMeasurementViewModel(Page page, Measurement item) : base(page)
         {
@@ -27,15 +31,47 @@ namespace Opora.ViewModels
             Item = item;
 
             // TODO
-            H = X = H1 = H2 = Result = (0.0).ToString("F1");
+            Height = X = H1 = H2 = Result = (0.0).ToString("F1");
+
+            _pillars.Add(new Pillar { Name = "Опора 123", Height = 1, Taper = 2 });
+            _pillars.Add(new Pillar { Name = "Опора 234", Height = 2, Taper = 3 });
         }
 
         public Measurement Item { get; set; }
 
-        public string H
+        public ObservableCollection<Pillar> Pillars
         {
-            get { return _h; }
-            set { Set(() => H, ref _h, value); }
+            get { return _pillars; }
+        }
+
+
+        private Pillar _selectedPillar;
+
+        public Pillar SelectedPillar
+        {
+            get { return _selectedPillar; }
+            set
+            {
+                if (_selectedPillar == value)
+                    return;
+                _selectedPillar = value;
+                RaisePropertyChanged();
+
+                if (SelectedPillar != null)
+                {
+                    Height = SelectedPillar.Height.ToString();
+                    X = SelectedPillar.Taper.ToString();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Высота опоры
+        /// </summary>
+        public string Height
+        {
+            get { return _height; }
+            set { Set(() => Height, ref _height, value); }
         }
 
         public string X
@@ -87,15 +123,25 @@ namespace Opora.ViewModels
 
         private void Calculate()
         {
-            double h, h1, h2, x;
-            if (!TryParse(H, out h) || !TryParse(X, out x) || !TryParse(H1, out h1) || !TryParse(H2, out h2))
+            double height, h1, h2, x;
+            if (!TryParse(Height, out height) || !TryParse(X, out x) || !TryParse(H1, out h1) || !TryParse(H2, out h2))
             {
                 App.Current.MainPage.DisplayAlert("Расчёт", "Неверные исходные данные", "OK");
                 return;
             }
 
-            double result = x - Math.Abs(h1 - h2) * h;
+            double result = x - Math.Abs(h1 - h2) * height;
             Result = result.ToString();
+        }
+
+        public override void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.RaisePropertyChanged(propertyName);
+        }
+
+        public override void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        {
+            base.RaisePropertyChanged<T>(propertyExpression);
         }
 
     }

@@ -9,11 +9,11 @@
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="3">
             <Label Text="Марка опоры" FontSize="Small" />
-            <Entry FontSize="Small" />
+            <Picker ItemsSource="{Binding Pillars}" SelectedItem="{Binding SelectedPillar, Mode=TwoWay}" Title="Выбрать опору" />
             <Label Text="Высота опоры" FontSize="Small" />
-            <Entry Text="{Binding H}" FontSize="Small" />
+            <Entry Text="{Binding Height, Mode=TwoWay}" FontSize="Small" />
             <Label Text="Конусность опоры" FontSize="Small" />
-            <Editor Text="{Binding X}" FontSize="Small" Margin="0" />
+            <Editor Text="{Binding X, Mode=TwoWay}" FontSize="Small" Margin="0" />
             <Label Text="Первое измерение" FontSize="Small" />
             <Editor Text="{Binding H1}" FontSize="Small" Margin="0" />
             <Label Text="Второе измерение" FontSize="Small" />

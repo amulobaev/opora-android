@@ -24,7 +24,7 @@ namespace Opora.Models
         /// <summary>
         /// Высота опоры
         /// </summary>
-        public double H { get; set; }
+        public double Height { get; set; }
 
         /// <summary>
         /// Конусность опоры

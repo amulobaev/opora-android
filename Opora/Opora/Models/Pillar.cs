@@ -21,5 +21,10 @@ namespace Opora.Models
         /// Конусность опоры
         /// </summary>
         public double Taper { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
