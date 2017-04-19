@@ -20,6 +20,7 @@ namespace Opora.ViewModels
             get { return isBusy; }
             set { Set(() => IsBusy, ref isBusy, value); }
         }
+
         /// <summary>
         /// Private backing field to hold the title
         /// </summary>

@@ -19,9 +19,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\EditMeasurementPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\NewItemPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -30,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseDataObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Pillar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EditPillarViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PillarsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -51,9 +49,6 @@
       <DependentUpon>EditMeasurementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EditMeasurementViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\NewItemPage.xaml.cs">
-      <DependentUpon>NewItemPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\PillarsPage.xaml.cs">
       <DependentUpon>PillarsPage.xaml</DependentUpon>
     </Compile>

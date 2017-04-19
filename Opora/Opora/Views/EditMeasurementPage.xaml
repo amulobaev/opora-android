@@ -4,7 +4,8 @@
              x:Class="Opora.Views.EditMeasurementPage"
              Title="{Binding Title}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Сохранить" Clicked="Save_Clicked" />
+        <!--<ToolbarItem Text="Сохранить" Clicked="Save_Clicked" />-->
+        <ToolbarItem Text="Сохранить" Command="{Binding SaveCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Spacing="5" Padding="5">

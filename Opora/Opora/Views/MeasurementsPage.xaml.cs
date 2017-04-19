@@ -15,7 +15,7 @@ namespace Opora.Views
 		{
 			InitializeComponent();
 
-			BindingContext = viewModel = new MeasurementsViewModel();
+			BindingContext = viewModel = new MeasurementsViewModel(this);
 		}
 
 		async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -24,7 +24,11 @@ namespace Opora.Views
 			if (item == null)
 				return;
 
-			await Navigation.PushAsync(new EditMeasurementPage(new EditMeasurementViewModel(item)));
+            var view = new EditMeasurementPage();
+            var viewModel = new EditMeasurementViewModel(view, item);
+            view.BindingContext = viewModel;
+
+            await Navigation.PushAsync(view);
 
 			// Manually deselect item
 			ItemsListView.SelectedItem = null;
@@ -37,11 +41,14 @@ namespace Opora.Views
         /// <param name="e"></param>
 		async void AddItem_Clicked(object sender, EventArgs e)
 		{
-            Measurement newItem = new Measurement
+            Measurement item = new Measurement
             {
                 //Id = Guid.NewGuid(),
             };
-            var view = new EditMeasurementPage(new EditMeasurementViewModel(newItem));
+            var view = new EditMeasurementPage();
+            var viewModel = new EditMeasurementViewModel(view, item);
+            view.BindingContext = viewModel;
+
             await Navigation.PushAsync(view);
 		}
 

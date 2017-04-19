@@ -18,7 +18,7 @@ namespace Opora.Views
 		{
 			InitializeComponent();
 
-			BindingContext = viewModel = new PillarsViewModel();
+			BindingContext = viewModel = new PillarsViewModel(this);
 		}
 
 		async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -27,7 +27,7 @@ namespace Opora.Views
 			if (item == null)
 				return;
 
-            var page = new EditPillarPage(new EditPillarViewModel(item));
+            var page = new EditPillarPage(new EditPillarViewModel(this, item));
             await Navigation.PushAsync(page);
 
 			// Manually deselect item
@@ -46,7 +46,7 @@ namespace Opora.Views
                 //Id = Guid.NewGuid(),
                 Name = "Новая опора"
             };
-            var view = new EditPillarPage(new EditPillarViewModel(newItem));
+            var view = new EditPillarPage(new EditPillarViewModel(this, newItem));
             await Navigation.PushAsync(view);
 		}
 

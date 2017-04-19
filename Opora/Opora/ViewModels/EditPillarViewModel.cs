@@ -1,21 +1,18 @@
 ﻿using System;
 
 using Opora.Models;
+using Xamarin.Forms;
 
 namespace Opora.ViewModels
 {
     /// <summary>
     /// Модель представления создания/изменения опоры
     /// </summary>
-    public class EditPillarViewModel : BaseViewModel
+    public class EditPillarViewModel : PageViewModel
     {
-        public EditPillarViewModel()
+        public EditPillarViewModel(Page page, Pillar item) : base(page)
         {
             Title = "Опора";
-        }
-
-        public EditPillarViewModel(Pillar item) : this()
-        {
             Name = item.Name;
             Height = item.Height.ToString();
             Taper = item.Taper.ToString();

@@ -11,16 +11,12 @@ using System.Collections.ObjectModel;
 
 namespace Opora.ViewModels
 {
-	public class PillarsViewModel : BaseViewModel
+	public class PillarsViewModel : PageViewModel
 	{
-        public ObservableCollection<Pillar> Items { get; set; }
-
-        public Command LoadItemsCommand { get; set; }
-
         /// <summary>
         /// Конструктор
         /// </summary>
-		public PillarsViewModel()
+		public PillarsViewModel(Page page) : base(page)
 		{
 			Title = "Опоры";
 			Items = new ObservableCollection<Pillar>();
@@ -36,6 +32,10 @@ namespace Opora.ViewModels
 				//await DataStore.AddItemAsync(_item);
 			});
 		}
+
+        public ObservableCollection<Pillar> Items { get; set; }
+
+        public Command LoadItemsCommand { get; set; }
 
         async Task ExecuteLoadItemsCommand()
 		{

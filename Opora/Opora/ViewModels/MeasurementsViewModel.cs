@@ -11,18 +11,18 @@ using System.Collections.ObjectModel;
 
 namespace Opora.ViewModels
 {
-	public class MeasurementsViewModel : BaseViewModel
+	public class MeasurementsViewModel : PageViewModel
 	{
         /// <summary>
         /// Конструктор
         /// </summary>
-		public MeasurementsViewModel()
+		public MeasurementsViewModel(Page page) : base(page)
 		{
 			Title = "Замеры";
 			Items = new ObservableCollection<Measurement>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-			MessagingCenter.Subscribe<NewItemPage, Measurement>(this, "AddItem", async (obj, item) =>
+			MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", async (obj, item) =>
 			{
 				var _item = item as Measurement;
 				Items.Add(_item);

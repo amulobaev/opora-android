@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Xamarin.Forms;
 
 using Opora.ViewModels;
@@ -10,25 +11,19 @@ namespace Opora.Views
 	{
         public Measurement Item { get; set; }
 
-        EditMeasurementViewModel viewModel;
+        private EditMeasurementViewModel _viewModel;
 
         // Note - The Xamarin.Forms Previewer requires a default, parameterless constructor to render a page.
         public EditMeasurementPage()
         {
             InitializeComponent();
+            BindingContext = _viewModel = new EditMeasurementViewModel(this);
         }
 
         public EditMeasurementPage(EditMeasurementViewModel viewModel)
 		{
 			InitializeComponent();
-
-			BindingContext = this.viewModel = viewModel;
+			BindingContext = _viewModel = viewModel;
 		}
-
-        async void Save_Clicked(object sender, EventArgs e)
-        {
-            MessagingCenter.Send(this, "AddItem", Item);
-            await Navigation.PopToRootAsync();
-        }
     }
 }

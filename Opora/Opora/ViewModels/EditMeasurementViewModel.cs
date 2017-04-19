@@ -1,13 +1,20 @@
-﻿using Opora.Models;
+﻿using System;
 using System.Globalization;
+using System.Windows.Input;
+
+using GalaSoft.MvvmLight.Command;
+using Xamarin.Forms;
+
+using Opora.Models;
 
 namespace Opora.ViewModels
 {
-	public class EditMeasurementViewModel : BaseViewModel
+	public class EditMeasurementViewModel : PageViewModel
 	{
         int quantity = 1;
+        private ICommand _saveCommand;
 
-        public EditMeasurementViewModel(Measurement item = null)
+        public EditMeasurementViewModel(Page page, Measurement item = null) : base(page)
 		{
 			Title = "Замер";
 			Item = item;
@@ -21,6 +28,11 @@ namespace Opora.ViewModels
 			set { Set(() => Quantity, ref quantity, value); }
 		}
 
+        public ICommand SaveCommand
+        {
+            get { return _saveCommand ?? (_saveCommand = new RelayCommand(Save)); }
+        }
+
         private bool TryParse(string s, out double result)
         {
             string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
@@ -28,5 +40,10 @@ namespace Opora.ViewModels
             return double.TryParse(s, out result);
         }
 
+        private void Save()
+        {
+            MessagingCenter.Send(this, "AddItem", Item);
+            Page.Navigation.PopToRootAsync();
+        }
     }
 }
