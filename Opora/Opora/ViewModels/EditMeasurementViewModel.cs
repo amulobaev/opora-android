@@ -1,4 +1,5 @@
 ﻿using Opora.Models;
+using System.Globalization;
 
 namespace Opora.ViewModels
 {
@@ -17,7 +18,15 @@ namespace Opora.ViewModels
         public int Quantity
 		{
 			get { return quantity; }
-			set { SetProperty(ref quantity, value); }
+			set { Set(() => Quantity, ref quantity, value); }
 		}
-	}
+
+        private bool TryParse(string s, out double result)
+        {
+            string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            s = s.Replace(".", separator).Replace(",", separator);
+            return double.TryParse(s, out result);
+        }
+
+    }
 }

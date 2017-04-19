@@ -7,11 +7,20 @@
         <ToolbarItem Text="Сохранить" Clicked="Save_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
+        <StackLayout Spacing="5" Padding="5">
+            <Label Text="Марка опоры" FontSize="Medium" />
+            <Entry Text="{Binding H}" FontSize="Small" />
+            <Label Text="Конусность опоры" FontSize="Medium" />
+            <Editor Text="{Binding X}" FontSize="Small" Margin="0" />
+            <Label Text="Первое измерение" FontSize="Medium" />
+            <Editor Text="{Binding H1}" FontSize="Small" Margin="0" />
+            <Label Text="Второе измерение" FontSize="Medium" />
+            <Editor Text="{Binding H2}" FontSize="Small" Margin="0" />
+            <Button Margin="1" Text="Расчёт" BackgroundColor="{StaticResource Primary}" TextColor="White" />
+            <Label Text="Угол наклона" FontSize="Medium" />
+            <Editor Text="{Binding Result}" FontSize="Small" Margin="0" />
+            <Label Text="Процентное соотношение" FontSize="Medium" />
+            <Editor Text="{Binding Result}" FontSize="Small" Margin="0" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

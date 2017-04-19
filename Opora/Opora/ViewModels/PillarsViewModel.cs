@@ -7,12 +7,13 @@ using Xamarin.Forms;
 using Opora.Helpers;
 using Opora.Models;
 using Opora.Views;
+using System.Collections.ObjectModel;
 
 namespace Opora.ViewModels
 {
 	public class PillarsViewModel : BaseViewModel
 	{
-        public ObservableRangeCollection<Pillar> Items { get; set; }
+        public ObservableCollection<Pillar> Items { get; set; }
 
         public Command LoadItemsCommand { get; set; }
 
@@ -22,7 +23,7 @@ namespace Opora.ViewModels
 		public PillarsViewModel()
 		{
 			Title = "Опоры";
-			Items = new ObservableRangeCollection<Pillar>();
+			Items = new ObservableCollection<Pillar>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             Items.Add(new Pillar { Name = "Опора 1", Height = 1, Taper = 2 });

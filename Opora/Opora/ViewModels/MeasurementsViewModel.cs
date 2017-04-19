@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using Opora.Helpers;
 using Opora.Models;
 using Opora.Views;
+using System.Collections.ObjectModel;
 
 namespace Opora.ViewModels
 {
@@ -18,7 +19,7 @@ namespace Opora.ViewModels
 		public MeasurementsViewModel()
 		{
 			Title = "Замеры";
-			Items = new ObservableRangeCollection<Measurement>();
+			Items = new ObservableCollection<Measurement>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
 			MessagingCenter.Subscribe<NewItemPage, Measurement>(this, "AddItem", async (obj, item) =>
@@ -29,7 +30,7 @@ namespace Opora.ViewModels
 			});
 		}
 
-        public ObservableRangeCollection<Measurement> Items { get; set; }
+        public ObservableCollection<Measurement> Items { get; set; }
 
         public Command LoadItemsCommand { get; set; }
 
@@ -44,7 +45,10 @@ namespace Opora.ViewModels
 			{
 				Items.Clear();
 				var items = await DataStore.GetItemsAsync(true);
-				Items.ReplaceRange(items);
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
 			}
 			catch (Exception ex)
 			{

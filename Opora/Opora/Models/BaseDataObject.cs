@@ -1,5 +1,6 @@
 ﻿using System;
 using Opora.Helpers;
+using GalaSoft.MvvmLight;
 
 namespace Opora.Models
 {

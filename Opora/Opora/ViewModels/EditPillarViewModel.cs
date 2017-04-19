@@ -26,7 +26,7 @@ namespace Opora.ViewModels
         public string Name
         {
             get { return _name; }
-            set { SetProperty(ref _name, value); }
+            set { Set(() => Name, ref _name, value); }
         }
 
         private string _height;
@@ -34,7 +34,7 @@ namespace Opora.ViewModels
         public string Height
         {
             get { return _height; }
-            set { SetProperty(ref _height, value); }
+            set { Set(() => Height, ref _height, value); }
         }
 
         private string _taper;
@@ -42,8 +42,7 @@ namespace Opora.ViewModels
         public string Taper
         {
             get { return _taper; }
-            set { SetProperty(ref _taper, value); }
+            set { Set(() => Taper, ref _taper, value); }
         }
-
     }
 }
