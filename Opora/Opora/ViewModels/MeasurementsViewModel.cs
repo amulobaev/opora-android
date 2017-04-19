@@ -31,7 +31,7 @@ namespace Opora.ViewModels
 				await DataStore.AddItemAsync(_item);
 			});
 
-            ExecuteLoadItemsCommand();
+            //ExecuteLoadItemsCommand();
         }
 
         public ObservableCollection<Measurement> Items { get; set; }

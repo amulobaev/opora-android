@@ -4,24 +4,25 @@
              x:Class="Opora.Views.EditMeasurementPage"
              Title="{Binding Title}">
     <ContentPage.ToolbarItems>
-        <!--<ToolbarItem Text="Сохранить" Clicked="Save_Clicked" />-->
         <ToolbarItem Text="Сохранить" Command="{Binding SaveCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Spacing="5" Padding="5">
-            <Label Text="Марка опоры" FontSize="Medium" />
+        <StackLayout Spacing="3" Padding="3">
+            <Label Text="Марка опоры" FontSize="Small" />
+            <Entry FontSize="Small" />
+            <Label Text="Высота опоры" FontSize="Small" />
             <Entry Text="{Binding H}" FontSize="Small" />
-            <Label Text="Конусность опоры" FontSize="Medium" />
+            <Label Text="Конусность опоры" FontSize="Small" />
             <Editor Text="{Binding X}" FontSize="Small" Margin="0" />
-            <Label Text="Первое измерение" FontSize="Medium" />
+            <Label Text="Первое измерение" FontSize="Small" />
             <Editor Text="{Binding H1}" FontSize="Small" Margin="0" />
-            <Label Text="Второе измерение" FontSize="Medium" />
+            <Label Text="Второе измерение" FontSize="Small" />
             <Editor Text="{Binding H2}" FontSize="Small" Margin="0" />
-            <Button Margin="1" Text="Расчёт" BackgroundColor="{StaticResource Primary}" TextColor="White" />
-            <Label Text="Угол наклона" FontSize="Medium" />
+            <Button Margin="1" Text="Расчёт" BackgroundColor="{StaticResource Primary}" TextColor="White" Command="{Binding CalculateCommand}" />
+            <Label Text="Угол наклона" FontSize="Small" />
             <Editor Text="{Binding Result}" FontSize="Small" Margin="0" />
-            <Label Text="Процентное соотношение" FontSize="Medium" />
-            <Editor Text="{Binding Result}" FontSize="Small" Margin="0" />
+            <Label Text="Процентное соотношение" FontSize="Small" />
+            <Editor FontSize="Small" Margin="0" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
