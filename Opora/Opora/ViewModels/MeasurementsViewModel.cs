@@ -8,6 +8,8 @@ using Opora.Helpers;
 using Opora.Models;
 using Opora.Views;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace Opora.ViewModels
 {
@@ -28,9 +30,34 @@ namespace Opora.ViewModels
 				Items.Add(_item);
 				await DataStore.AddItemAsync(_item);
 			});
-		}
+
+            ExecuteLoadItemsCommand();
+        }
 
         public ObservableCollection<Measurement> Items { get; set; }
+
+        private Measurement _selectedItem;
+
+        public Measurement SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (_selectedItem == value)
+                    return;
+                _selectedItem = value;
+                RaisePropertyChanged();
+
+                if (SelectedItem == null)
+                    return;
+                var page = new EditMeasurementPage();
+                page.BindingContext = new EditMeasurementViewModel(page, SelectedItem);
+                Page.Navigation.PushAsync(page);
+
+                // Manually deselect item
+                SelectedItem = null;
+            }
+        }
 
         public Command LoadItemsCommand { get; set; }
 
@@ -65,5 +92,25 @@ namespace Opora.ViewModels
 				IsBusy = false;
 			}
 		}
-	}
+
+        private ICommand _addItemCommand;
+
+        public ICommand AddItemCommand
+        {
+            get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem)); }
+        }
+
+        private void AddItem()
+        {
+            Measurement item = new Measurement
+            {
+                //Id = Guid.NewGuid(),
+            };
+            var view = new EditMeasurementPage();
+            var viewModel = new EditMeasurementViewModel(view, item);
+            view.BindingContext = viewModel;
+
+            Page.Navigation.PushAsync(view);
+        }
+    }
 }

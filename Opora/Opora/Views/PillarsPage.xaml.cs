@@ -1,61 +1,15 @@
-﻿using System;
-
-using Xamarin.Forms;
-
-using Opora.Models;
-using Opora.ViewModels;
+﻿using Xamarin.Forms;
 
 namespace Opora.Views
 {
-	public partial class PillarsPage : ContentPage
-	{
-		PillarsViewModel viewModel;
-
+    public partial class PillarsPage : ContentPage
+    {
         /// <summary>
         /// Конструктор
         /// </summary>
 		public PillarsPage()
-		{
-			InitializeComponent();
-
-			BindingContext = viewModel = new PillarsViewModel(this);
-		}
-
-		async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
-		{
-			var item = args.SelectedItem as Pillar;
-			if (item == null)
-				return;
-
-            var page = new EditPillarPage(new EditPillarViewModel(this, item));
-            await Navigation.PushAsync(page);
-
-			// Manually deselect item
-			ItemsListView.SelectedItem = null;
-		}
-
-        /// <summary>
-        /// Добавление нового замера
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-		async void AddItem_Clicked(object sender, EventArgs e)
-		{
-            Pillar newItem = new Pillar
-            {
-                //Id = Guid.NewGuid(),
-                Name = "Новая опора"
-            };
-            var view = new EditPillarPage(new EditPillarViewModel(this, newItem));
-            await Navigation.PushAsync(view);
-		}
-
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-
-			if (viewModel.Items.Count == 0)
-				viewModel.LoadItemsCommand.Execute(null);
-		}
-	}
+        {
+            InitializeComponent();
+        }
+    }
 }

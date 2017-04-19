@@ -2,6 +2,8 @@
 
 using Opora.Models;
 using Xamarin.Forms;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace Opora.ViewModels
 {
@@ -40,6 +42,20 @@ namespace Opora.ViewModels
         {
             get { return _taper; }
             set { Set(() => Taper, ref _taper, value); }
+        }
+
+        private ICommand _saveCommand;
+
+        public ICommand SaveCommand
+        {
+            get { return _saveCommand ?? (_saveCommand = new RelayCommand(Save)); }
+        }
+
+        private void Save()
+        {
+            Pillar pillar = new Pillar { Name = Name };
+            MessagingCenter.Send(this, "AddItem", pillar);
+            Page.Navigation.PopToRootAsync();
         }
     }
 }

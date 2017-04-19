@@ -8,6 +8,8 @@ using Opora.Helpers;
 using Opora.Models;
 using Opora.Views;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace Opora.ViewModels
 {
@@ -16,7 +18,7 @@ namespace Opora.ViewModels
         /// <summary>
         /// Конструктор
         /// </summary>
-		public PillarsViewModel(Page page) : base(page)
+        public PillarsViewModel(Page page) : base(page)
 		{
 			Title = "Опоры";
 			Items = new ObservableCollection<Pillar>();
@@ -65,5 +67,47 @@ namespace Opora.ViewModels
 				IsBusy = false;
 			}
 		}
-	}
+
+        private ICommand _addItemCommand;
+
+        public ICommand AddItemCommand
+        {
+            get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem)); }
+        }
+
+        private Pillar _selectedItem;
+
+        public Pillar SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (_selectedItem == value)
+                    return;
+                _selectedItem = value;
+                RaisePropertyChanged();
+
+                if (SelectedItem == null)
+                    return;
+                var page = new EditPillarPage();
+                page.BindingContext = new EditPillarViewModel(page, SelectedItem);
+                Page.Navigation.PushAsync(page);
+
+                // Manually deselect item
+                SelectedItem = null;
+            }
+        }
+
+        private void AddItem()
+        {
+            Pillar newItem = new Pillar
+            {
+                //Id = Guid.NewGuid(),
+                Name = "Новая опора"
+            };
+            var page = new EditPillarPage();
+            page.BindingContext = new EditPillarViewModel(page, newItem);
+            Page.Navigation.PushAsync(page);
+        }
+    }
 }
