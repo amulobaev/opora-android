@@ -17,5 +17,20 @@ namespace Opora
         {
             get { return _kernel.Get<MeasurementsViewModel>(); }
         }
+
+        public PillarsViewModel Pillars
+        {
+            get { return _kernel.Get<PillarsViewModel>(); }
+        }
+
+        public EditMeasurementViewModel EditMeasurement
+        {
+            get { return _kernel.Get<EditMeasurementViewModel>(); }
+        }
+
+        public EditPillarViewModel EditPillar
+        {
+            get { return _kernel.Get<EditPillarViewModel>(); }
+        }
     }
 }

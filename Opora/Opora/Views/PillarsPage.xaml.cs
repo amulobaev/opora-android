@@ -1,5 +1,6 @@
-﻿using Opora.ViewModels;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
+
+using Opora.ViewModels;
 
 namespace Opora.Views
 {
@@ -11,7 +12,9 @@ namespace Opora.Views
 		public PillarsPage()
         {
             InitializeComponent();
-            BindingContext = new PillarsViewModel();
+            PageViewModel viewModel = App.Locator.Pillars;
+            viewModel.Page = this;
+            BindingContext = viewModel;
         }
     }
 }

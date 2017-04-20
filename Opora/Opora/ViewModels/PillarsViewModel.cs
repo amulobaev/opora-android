@@ -10,21 +10,37 @@ using Opora.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Opora.Domain;
+using System.Linq;
 
 namespace Opora.ViewModels
 {
 	public class PillarsViewModel : PageViewModel
 	{
+        private IRepository<Pillar, Guid> _repository;
+        private Pillar _selectedItem;
+        private ICommand _addItemCommand;
+
         /// <summary>
         /// Конструктор
         /// </summary>
-        public PillarsViewModel()
+        public PillarsViewModel(IRepository<Pillar, Guid> repository)
 		{
-			Title = "Опоры";
-			Items = new ObservableCollection<Pillar>();
-			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            _repository = repository;
 
-            Items.Add(new Pillar { Name = "Опора 1", Height = 1, Taper = 2 });
+            Title = "Опоры";
+			Items = new ObservableCollection<Pillar>();
+
+            var items = _repository.GetItems().ToList();
+            if (items.Any())
+            {
+                IsBusy = true;
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
+                IsBusy = false;
+            }
 
             MessagingCenter.Subscribe<EditPillarPage, Pillar>(this, "AddItem", (obj, item) =>
 			{
@@ -39,43 +55,10 @@ namespace Opora.ViewModels
 
         public Command LoadItemsCommand { get; set; }
 
-        async Task ExecuteLoadItemsCommand()
-		{
-			if (IsBusy)
-				return;
-
-			IsBusy = true;
-
-			try
-			{
-				Items.Clear();
-				//var items = await DataStore.GetItemsAsync(true);
-				//Items.ReplaceRange(items);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				MessagingCenter.Send(new MessagingCenterAlert
-				{
-					Title = "Error",
-					Message = "Unable to load items.",
-					Cancel = "OK"
-				}, "message");
-			}
-			finally
-			{
-				IsBusy = false;
-			}
-		}
-
-        private ICommand _addItemCommand;
-
         public ICommand AddItemCommand
         {
             get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem)); }
         }
-
-        private Pillar _selectedItem;
 
         public Pillar SelectedItem
         {
@@ -90,7 +73,8 @@ namespace Opora.ViewModels
                 if (SelectedItem == null)
                     return;
                 var page = new EditPillarPage();
-                page.BindingContext = new EditPillarViewModel(page, SelectedItem);
+                page.BindingContext = new EditPillarViewModel();
+                // Здесь передать данные об опоре
                 Page.Navigation.PushAsync(page);
 
                 // Manually deselect item
@@ -106,7 +90,8 @@ namespace Opora.ViewModels
                 Name = "Новая опора"
             };
             var page = new EditPillarPage();
-            page.BindingContext = new EditPillarViewModel(page, newItem);
+            page.BindingContext = new EditPillarViewModel();
+            // Здесь передать данные об опоре
             Page.Navigation.PushAsync(page);
         }
     }

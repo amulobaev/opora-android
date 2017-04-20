@@ -28,7 +28,7 @@ namespace Opora.ViewModels
 			{
 				var _item = item as Measurement;
 				Items.Add(_item);
-				await DataStore.AddItemAsync(_item);
+				//await DataStore.AddItemAsync(_item);
 			});
 
             //ExecuteLoadItemsCommand();
@@ -51,7 +51,7 @@ namespace Opora.ViewModels
                 if (SelectedItem == null)
                     return;
                 var page = new EditMeasurementPage();
-                page.BindingContext = new EditMeasurementViewModel(page, SelectedItem);
+                // Здесь передать данные о замере
                 Page.Navigation.PushAsync(page);
 
                 // Manually deselect item
@@ -71,11 +71,11 @@ namespace Opora.ViewModels
 			try
 			{
 				Items.Clear();
-				var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
+				//var items = await DataStore.GetItemsAsync(true);
+                //foreach (var item in items)
+                //{
+                //    Items.Add(item);
+                //}
 			}
 			catch (Exception ex)
 			{
@@ -106,11 +106,9 @@ namespace Opora.ViewModels
             {
                 //Id = Guid.NewGuid(),
             };
-            var view = new EditMeasurementPage();
-            var viewModel = new EditMeasurementViewModel(view, item);
-            view.BindingContext = viewModel;
-
-            Page.Navigation.PushAsync(view);
+            var page = new EditMeasurementPage();
+            // Здесь передать данные о замере
+            Page.Navigation.PushAsync(page);
         }
     }
 }

@@ -12,12 +12,12 @@ namespace Opora.ViewModels
     /// </summary>
     public class EditPillarViewModel : PageViewModel
     {
-        public EditPillarViewModel(Pillar item)
+        public EditPillarViewModel()
         {
             Title = "Опора";
-            Name = item.Name;
-            Height = item.Height.ToString();
-            Taper = item.Taper.ToString();
+            //Name = item.Name;
+            //Height = item.Height.ToString();
+            //Taper = item.Taper.ToString();
         }
 
         private string _name;

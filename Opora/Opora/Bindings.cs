@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Ninject.Modules;
+
+using Opora.Domain;
+using Opora.Models;
 using Opora.ViewModels;
 
 namespace Opora
@@ -12,6 +13,9 @@ namespace Opora
         public override void Load()
         {
             Bind<MeasurementsViewModel>().ToSelf();
+            Bind<PillarsViewModel>().ToSelf();
+            Bind<IRepository<Measurement, Guid>>().To<MeasurementRepository>().InSingletonScope();
+            Bind<IRepository<Pillar, Guid>>().To<PillarRepository>().InSingletonScope();
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using Opora.ViewModels;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
+
+using Opora.ViewModels;
 
 namespace Opora.Views
 {
@@ -8,7 +9,9 @@ namespace Opora.Views
 		public MeasurementsPage()
 		{
 			InitializeComponent();
-            BindingContext = new MeasurementsViewModel();
+            PageViewModel viewModel = App.Locator.Measurements;
+            viewModel.Page = this;
+            BindingContext = viewModel;
 		}
 	}
 }

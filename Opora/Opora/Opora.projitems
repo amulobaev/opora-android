@@ -25,6 +25,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Bindings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\IRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\MeasurementRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\PillarRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseDataObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Pillar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NavigationMessage.cs" />

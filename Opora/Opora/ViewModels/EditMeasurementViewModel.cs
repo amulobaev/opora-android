@@ -9,6 +9,8 @@ using Opora.Models;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
+using Opora.Domain;
+using System.Linq;
 
 namespace Opora.ViewModels
 {
@@ -23,18 +25,27 @@ namespace Opora.ViewModels
         private ICommand _saveCommand;
         private ICommand _calculateCommand;
         private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
+        private IRepository<Pillar, Guid> _repository;
 
-        public EditMeasurementViewModel(Measurement item)
+        public EditMeasurementViewModel(IRepository<Pillar, Guid> repository)
         {
+            _repository = repository;
+
             Title = "Замер";
 
-            Item = item;
+            //Item = item;
 
             // TODO
             Height = X = H1 = H2 = Result = (0.0).ToString("F1");
 
-            _pillars.Add(new Pillar { Name = "Опора 123", Height = 1, Taper = 2 });
-            _pillars.Add(new Pillar { Name = "Опора 234", Height = 2, Taper = 3 });
+            var pillars = _repository.GetItems().ToList();
+            if (pillars.Any())
+            {
+                foreach (var item in pillars)
+                {
+                    _pillars.Add(item);
+                }
+            }
         }
 
         public Measurement Item { get; set; }
