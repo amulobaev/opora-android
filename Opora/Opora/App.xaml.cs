@@ -2,13 +2,17 @@
 using Xamarin.Forms.Xaml;
 
 using Opora.Views;
-using Opora.ViewModels;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Opora
 {
     public partial class App : Application
     {
+        private static ViewModelLocator _locator;
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public App()
         {
             InitializeComponent();
@@ -16,23 +20,23 @@ namespace Opora
             SetMainPage();
         }
 
+        public static ViewModelLocator Locator
+        {
+            get { return _locator ?? (_locator = new ViewModelLocator()); }
+        }
+
         public static void SetMainPage()
         {
-            Page measurementsPage = new MeasurementsPage();
-            measurementsPage.BindingContext = new MeasurementsViewModel(measurementsPage);
-            Page pillarsPage = new PillarsPage();
-            pillarsPage.BindingContext = new PillarsViewModel(pillarsPage);
-
             Current.MainPage = new TabbedPage
             {
                 Children =
                 {
-                    new NavigationPage(measurementsPage)
+                    new NavigationPage(new MeasurementsPage())
                     {
                         Title = "Замеры",
                         Icon = Device.OnPlatform<string>("tab_feed.png",null,null)
                     },
-                    new NavigationPage(pillarsPage)
+                    new NavigationPage(new PillarsPage())
                     {
                         Title = "Опоры",
                         Icon = Device.OnPlatform<string>("tab_feed.png",null,null)

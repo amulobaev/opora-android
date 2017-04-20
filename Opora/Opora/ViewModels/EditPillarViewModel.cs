@@ -12,7 +12,7 @@ namespace Opora.ViewModels
     /// </summary>
     public class EditPillarViewModel : PageViewModel
     {
-        public EditPillarViewModel(Page page, Pillar item) : base(page)
+        public EditPillarViewModel(Pillar item)
         {
             Title = "Опора";
             Name = item.Name;

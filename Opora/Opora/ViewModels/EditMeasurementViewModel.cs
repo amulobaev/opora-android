@@ -24,7 +24,7 @@ namespace Opora.ViewModels
         private ICommand _calculateCommand;
         private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
 
-        public EditMeasurementViewModel(Page page, Measurement item) : base(page)
+        public EditMeasurementViewModel(Measurement item)
         {
             Title = "Замер";
 

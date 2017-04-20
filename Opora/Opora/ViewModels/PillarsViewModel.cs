@@ -18,7 +18,7 @@ namespace Opora.ViewModels
         /// <summary>
         /// Конструктор
         /// </summary>
-        public PillarsViewModel(Page page) : base(page)
+        public PillarsViewModel()
 		{
 			Title = "Опоры";
 			Items = new ObservableCollection<Pillar>();

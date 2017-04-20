@@ -18,7 +18,7 @@ namespace Opora.ViewModels
         /// <summary>
         /// Конструктор
         /// </summary>
-		public MeasurementsViewModel(Page page) : base(page)
+		public MeasurementsViewModel()
 		{
 			Title = "Замеры";
 			Items = new ObservableCollection<Measurement>();
