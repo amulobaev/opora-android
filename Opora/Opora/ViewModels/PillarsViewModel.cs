@@ -42,7 +42,7 @@ namespace Opora.ViewModels
                 IsBusy = false;
             }
 
-            MessagingCenter.Subscribe<EditPillarPage, Pillar>(this, "AddItem", (obj, item) =>
+            MessagingCenter.Subscribe<EditPillarViewModel, Pillar>(this, "AddItem", (obj, item) =>
 			{
 				var _item = item as Pillar;
 				Items.Add(_item);
@@ -84,15 +84,14 @@ namespace Opora.ViewModels
 
         private void AddItem()
         {
-            Pillar newItem = new Pillar
+            Page.Navigation.PushAsync(new EditPillarPage());
+
+            Pillar pillar = new Pillar
             {
                 //Id = Guid.NewGuid(),
                 Name = "Новая опора"
             };
-            var page = new EditPillarPage();
-            page.BindingContext = new EditPillarViewModel();
-            // Здесь передать данные об опоре
-            Page.Navigation.PushAsync(page);
+            MessagingCenter.Send(this, "EditPillar", pillar);
         }
     }
 }

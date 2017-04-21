@@ -15,6 +15,9 @@ namespace Opora.ViewModels
 {
 	public class MeasurementsViewModel : PageViewModel
 	{
+        private ICommand _addItemCommand;
+        private Measurement _selectedItem;
+
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -22,7 +25,7 @@ namespace Opora.ViewModels
 		{
 			Title = "Замеры";
 			Items = new ObservableCollection<Measurement>();
-			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+			//LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
 			MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", async (obj, item) =>
 			{
@@ -35,8 +38,6 @@ namespace Opora.ViewModels
         }
 
         public ObservableCollection<Measurement> Items { get; set; }
-
-        private Measurement _selectedItem;
 
         public Measurement SelectedItem
         {
@@ -60,40 +61,6 @@ namespace Opora.ViewModels
         }
 
         public Command LoadItemsCommand { get; set; }
-
-        async Task ExecuteLoadItemsCommand()
-		{
-			if (IsBusy)
-				return;
-
-			IsBusy = true;
-
-			try
-			{
-				Items.Clear();
-				//var items = await DataStore.GetItemsAsync(true);
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				MessagingCenter.Send(new MessagingCenterAlert
-				{
-					Title = "Error",
-					Message = "Unable to load items.",
-					Cancel = "OK"
-				}, "message");
-			}
-			finally
-			{
-				IsBusy = false;
-			}
-		}
-
-        private ICommand _addItemCommand;
 
         public ICommand AddItemCommand
         {

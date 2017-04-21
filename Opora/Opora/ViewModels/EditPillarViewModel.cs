@@ -1,9 +1,7 @@
-﻿using System;
-
-using Opora.Models;
+﻿using System.Windows.Input;
 using Xamarin.Forms;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Opora.Models;
 
 namespace Opora.ViewModels
 {
@@ -15,9 +13,13 @@ namespace Opora.ViewModels
         public EditPillarViewModel()
         {
             Title = "Опора";
-            //Name = item.Name;
-            //Height = item.Height.ToString();
-            //Taper = item.Taper.ToString();
+
+            MessagingCenter.Subscribe<PillarsViewModel, Pillar>(this, "EditPillar", (obj, item) =>
+            {
+                Name = item.Name;
+                Height = item.Height.ToString();
+                Taper = item.Taper.ToString();
+            });
         }
 
         private string _name;
@@ -49,6 +51,12 @@ namespace Opora.ViewModels
         public ICommand SaveCommand
         {
             get { return _saveCommand ?? (_saveCommand = new RelayCommand(Save)); }
+        }
+
+        public override void Dispose()
+        {
+            MessagingCenter.Unsubscribe<PillarsViewModel, Pillar>(this, "EditPillar");
+            base.Dispose();
         }
 
         private void Save()
