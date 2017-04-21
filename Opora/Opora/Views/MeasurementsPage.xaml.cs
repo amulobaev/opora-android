@@ -1,17 +1,13 @@
-﻿using Xamarin.Forms;
-
-using Opora.ViewModels;
+﻿using Opora.Controls;
 
 namespace Opora.Views
 {
-	public partial class MeasurementsPage : ContentPage
+    public partial class MeasurementsPage : CustomContentPage
 	{
 		public MeasurementsPage()
 		{
 			InitializeComponent();
-            PageViewModel viewModel = App.Locator.Measurements;
-            viewModel.Page = this;
-            BindingContext = viewModel;
+            BindingContext = App.Locator.Measurements;
 		}
 	}
 }

@@ -14,15 +14,14 @@ using System.Linq;
 
 namespace Opora.ViewModels
 {
-    public class EditMeasurementViewModel : PageViewModel
+    public class EditMeasurementViewModel : EditorViewModel<Measurement>
     {
         private string _height;
         private string _x;
         private string _h1;
         private string _h2;
         private string _result;
-
-        private ICommand _saveCommand;
+        private Pillar _selectedPillar;
         private ICommand _calculateCommand;
         private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
         private IRepository<Pillar, Guid> _repository;
@@ -48,15 +47,10 @@ namespace Opora.ViewModels
             }
         }
 
-        public Measurement Item { get; set; }
-
         public ObservableCollection<Pillar> Pillars
         {
             get { return _pillars; }
         }
-
-
-        private Pillar _selectedPillar;
 
         public Pillar SelectedPillar
         {
@@ -109,11 +103,6 @@ namespace Opora.ViewModels
             set { Set(() => Result, ref _result, value); }
         }
 
-        public ICommand SaveCommand
-        {
-            get { return _saveCommand ?? (_saveCommand = new RelayCommand(Save)); }
-        }
-
         public ICommand CalculateCommand
         {
             get { return _calculateCommand ?? (_calculateCommand = new RelayCommand(Calculate)); }
@@ -126,7 +115,7 @@ namespace Opora.ViewModels
             return double.TryParse(s, out result);
         }
 
-        private void Save()
+        protected override void Save()
         {
             MessagingCenter.Send(this, "AddItem", Item);
             Page.Navigation.PopToRootAsync();

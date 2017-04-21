@@ -1,5 +1,4 @@
 ﻿using Opora.Controls;
-using Opora.ViewModels;
 
 namespace Opora.Views
 {
@@ -8,9 +7,7 @@ namespace Opora.Views
         public EditPillarPage()
         {
             InitializeComponent();
-            PageViewModel viewModel = App.Locator.EditPillar;
-            viewModel.Page = this;
-            BindingContext = viewModel;
+            BindingContext = App.Locator.EditPillar;
         }
     }
 }

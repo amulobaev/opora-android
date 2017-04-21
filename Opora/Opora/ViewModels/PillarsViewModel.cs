@@ -85,10 +85,12 @@ namespace Opora.ViewModels
         private void AddItem()
         {
             Page.Navigation.PushAsync(new EditPillarPage());
-
+            DateTime now = DateTime.Now;
             Pillar pillar = new Pillar
             {
-                //Id = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
+                CreatedAt = now,
+                UpdatedAt = now,
                 Name = "Новая опора"
             };
             MessagingCenter.Send(this, "EditPillar", pillar);

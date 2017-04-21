@@ -26,13 +26,17 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Bindings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomContentPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\BaseEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\IRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\MeasurementEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\MeasurementRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\PillarEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\PillarRepository.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseDataObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Pillar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NavigationMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EditorViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EditPillarViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PillarsViewModel.cs" />
@@ -47,8 +51,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MeasurementsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\MockDataStore.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Measurement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessengingCenterAlert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutViewModel.cs" />
@@ -61,7 +63,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
   <ItemGroup>

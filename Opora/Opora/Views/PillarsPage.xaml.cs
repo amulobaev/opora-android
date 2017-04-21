@@ -1,20 +1,13 @@
-﻿using Xamarin.Forms;
-
-using Opora.ViewModels;
+﻿using Opora.Controls;
 
 namespace Opora.Views
 {
-    public partial class PillarsPage : ContentPage
+    public partial class PillarsPage : CustomContentPage
     {
-        /// <summary>
-        /// Конструктор
-        /// </summary>
 		public PillarsPage()
         {
             InitializeComponent();
-            PageViewModel viewModel = App.Locator.Pillars;
-            viewModel.Page = this;
-            BindingContext = viewModel;
+            BindingContext = App.Locator.Pillars;
         }
     }
 }

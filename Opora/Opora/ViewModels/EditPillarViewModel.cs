@@ -8,21 +8,24 @@ namespace Opora.ViewModels
     /// <summary>
     /// Модель представления создания/изменения опоры
     /// </summary>
-    public class EditPillarViewModel : PageViewModel
+    public class EditPillarViewModel : EditorViewModel<Pillar>
     {
+        private string _name;
+        private string _height;
+        private string _taper;
+
         public EditPillarViewModel()
         {
             Title = "Опора";
 
             MessagingCenter.Subscribe<PillarsViewModel, Pillar>(this, "EditPillar", (obj, item) =>
             {
+                Item = item;
                 Name = item.Name;
                 Height = item.Height.ToString();
                 Taper = item.Taper.ToString();
             });
         }
-
-        private string _name;
 
         public string Name
         {
@@ -30,27 +33,16 @@ namespace Opora.ViewModels
             set { Set(() => Name, ref _name, value); }
         }
 
-        private string _height;
-
         public string Height
         {
             get { return _height; }
             set { Set(() => Height, ref _height, value); }
         }
 
-        private string _taper;
-
         public string Taper
         {
             get { return _taper; }
             set { Set(() => Taper, ref _taper, value); }
-        }
-
-        private ICommand _saveCommand;
-
-        public ICommand SaveCommand
-        {
-            get { return _saveCommand ?? (_saveCommand = new RelayCommand(Save)); }
         }
 
         public override void Dispose()
@@ -59,7 +51,7 @@ namespace Opora.ViewModels
             base.Dispose();
         }
 
-        private void Save()
+        protected override void Save()
         {
             Pillar pillar = new Pillar { Name = Name };
             MessagingCenter.Send(this, "AddItem", pillar);
