@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows.Input;
 
 using GalaSoft.MvvmLight.Command;
@@ -108,13 +107,6 @@ namespace Opora.ViewModels
             get { return _calculateCommand ?? (_calculateCommand = new RelayCommand(Calculate)); }
         }
 
-        private bool TryParse(string s, out double result)
-        {
-            string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            s = s.Replace(".", separator).Replace(",", separator);
-            return double.TryParse(s, out result);
-        }
-
         protected override void Save()
         {
             MessagingCenter.Send(this, "AddItem", Item);
@@ -124,9 +116,9 @@ namespace Opora.ViewModels
         private void Calculate()
         {
             double height, h1, h2, x;
-            if (!TryParse(Height, out height) || !TryParse(X, out x) || !TryParse(H1, out h1) || !TryParse(H2, out h2))
+            if (!Helpers.TryParse(Height, out height) || !Helpers.TryParse(X, out x) || !Helpers.TryParse(H1, out h1) || !Helpers.TryParse(H2, out h2))
             {
-                App.Current.MainPage.DisplayAlert("Расчёт", "Неверные исходные данные", "OK");
+                Page.DisplayAlert("Расчёт", "Неверные исходные данные", "OK");
                 return;
             }
 
@@ -143,6 +135,5 @@ namespace Opora.ViewModels
         {
             base.RaisePropertyChanged<T>(propertyExpression);
         }
-
     }
 }

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
+using GalaSoft.MvvmLight.Command;
 using Xamarin.Forms;
 
-using Opora.Helpers;
 using Opora.Models;
 using Opora.Views;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 
 namespace Opora.ViewModels
 {
-	public class MeasurementsViewModel : PageViewModel
+    public class MeasurementsViewModel : PageViewModel
 	{
         private ICommand _addItemCommand;
         private Measurement _selectedItem;
@@ -25,7 +21,6 @@ namespace Opora.ViewModels
 		{
 			Title = "Замеры";
 			Items = new ObservableCollection<Measurement>();
-			//LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
 			MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", async (obj, item) =>
 			{
@@ -33,8 +28,6 @@ namespace Opora.ViewModels
 				Items.Add(_item);
 				//await DataStore.AddItemAsync(_item);
 			});
-
-            //ExecuteLoadItemsCommand();
         }
 
         public ObservableCollection<Measurement> Items { get; set; }

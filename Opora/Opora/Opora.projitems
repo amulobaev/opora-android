@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Domain\MeasurementRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\PillarEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\PillarRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Pillar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NavigationMessage.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MeasurementsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Measurement.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessengingCenterAlert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\EditMeasurementPage.xaml.cs">
       <DependentUpon>EditMeasurementPage.xaml</DependentUpon>
@@ -61,9 +61,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\PillarsPage.xaml.cs">
       <DependentUpon>PillarsPage.xaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\PillarsPage.xaml">

@@ -1,6 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+
 using Xamarin.Forms;
 using GalaSoft.MvvmLight.Command;
+
 using Opora.Models;
 
 namespace Opora.ViewModels
@@ -53,8 +56,30 @@ namespace Opora.ViewModels
 
         protected override void Save()
         {
-            Pillar pillar = new Pillar { Name = Name };
-            MessagingCenter.Send(this, "AddItem", pillar);
+            if (string.IsNullOrEmpty(Name))
+            {
+                Page.DisplayAlert("Опора", "Не указана марка опоры", "OK");
+                return;
+            }
+            double height;
+            if (!Helpers.TryParse(Height, out height))
+            {
+                Page.DisplayAlert("Опора", "Высота опоры указана неверно", "OK");
+                return;
+            }
+            double taper;
+            if (!Helpers.TryParse(Taper, out taper))
+            {
+                Page.DisplayAlert("Опора", "Конусность опоры указана неверно", "OK");
+                return;
+            }
+
+            Item.Name = Name;
+            Item.Height = height;
+            Item.Taper = taper;
+            Item.UpdatedAt = DateTime.Now;
+
+            MessagingCenter.Send(this, "AddItem", Item);
             Page.Navigation.PopToRootAsync();
         }
     }

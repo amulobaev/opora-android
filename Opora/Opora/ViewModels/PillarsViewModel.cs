@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
+using GalaSoft.MvvmLight.Command;
 using Xamarin.Forms;
 
-using Opora.Helpers;
+using Opora.Domain;
 using Opora.Models;
 using Opora.Views;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
-using Opora.Domain;
-using System.Linq;
 
 namespace Opora.ViewModels
 {
-	public class PillarsViewModel : PageViewModel
+    public class PillarsViewModel : PageViewModel
 	{
         private IRepository<Pillar, Guid> _repository;
         private Pillar _selectedItem;
@@ -44,10 +41,15 @@ namespace Opora.ViewModels
 
             MessagingCenter.Subscribe<EditPillarViewModel, Pillar>(this, "AddItem", (obj, item) =>
 			{
-				var _item = item as Pillar;
-				Items.Add(_item);
-                //App.Current.MainPage.DisplayAlert("Test Title", "Test", "OK");
-				//await DataStore.AddItemAsync(_item);
+                if (Items.Any(x => x.Id == item.Id))
+                {
+                    _repository.UpdateItem(item);
+                }
+                else
+                {
+                    Items.Add(item);
+                    _repository.AddItem(item);
+                }
 			});
 		}
 
@@ -72,10 +74,8 @@ namespace Opora.ViewModels
 
                 if (SelectedItem == null)
                     return;
-                var page = new EditPillarPage();
-                page.BindingContext = new EditPillarViewModel();
-                // Здесь передать данные об опоре
-                Page.Navigation.PushAsync(page);
+                Page.Navigation.PushAsync(new EditPillarPage());
+                MessagingCenter.Send(this, "EditPillar", SelectedItem);
 
                 // Manually deselect item
                 SelectedItem = null;
