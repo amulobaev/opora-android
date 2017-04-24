@@ -4,6 +4,8 @@ namespace Opora.Domain
 {
     public class MeasurementEntity : BaseEntity
     {
+        public Guid PillarId { get; set; }
+
         public double Height { get; set; }
 
         public double X { get; set; }
