@@ -1,5 +1,7 @@
 ﻿using System;
 
+using AutoMapper;
+using Ninject;
 using Ninject.Modules;
 
 using Opora.Domain;
@@ -16,6 +18,9 @@ namespace Opora
             Bind<PillarsViewModel>().ToSelf();
             Bind<IRepository<Measurement, Guid>>().To<MeasurementRepository>().InSingletonScope();
             Bind<IRepository<Pillar, Guid>>().To<PillarRepository>().InSingletonScope();
+
+            Bind<IConfigurationProvider>().ToProvider<AutoMapperConfigurationProvider>().InSingletonScope();
+            Bind<IMapper>().ToMethod(context => context.Kernel.Get<IConfigurationProvider>().CreateMapper());
         }
     }
 }

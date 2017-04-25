@@ -9,23 +9,14 @@ namespace Opora.Domain
 {
     public class PillarRepository : IRepository<Pillar, Guid>
     {
+        private IMapper _mapper;
+
         private readonly List<PillarEntity> _items;
 
-        static PillarRepository()
+        public PillarRepository(IMapper mapper)
         {
-            try
-            {
-                Mapper.Initialize(x => x.CreateMap<PillarEntity, Pillar>());
-                Mapper.Initialize(x => x.CreateMap<Pillar, PillarEntity>());
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+            _mapper = mapper;
 
-        public PillarRepository()
-        {
             _items = new List<PillarEntity>()
             {
                 new PillarEntity {Name = "СС 156.6", Height = 15.6, Taper = 11.7 },
@@ -35,7 +26,7 @@ namespace Opora.Domain
 
         public void AddItem(Pillar item)
         {
-            var entity = Mapper.Map<PillarEntity>(item);
+            var entity = _mapper.Map<PillarEntity>(item);
             _items.Add(entity);
         }
 
@@ -47,20 +38,13 @@ namespace Opora.Domain
         public Pillar GetItem(Guid id)
         {
             var entity = _items.FirstOrDefault(x => x.Id == id);
-            return entity != null ? Mapper.Map<Pillar>(entity) : null;
+            return entity != null ? _mapper.Map<Pillar>(entity) : null;
         }
 
         public IEnumerable<Pillar> GetItems()
         {
-            try
-            {
-                var items = _items.Select(x => Mapper.Map<PillarEntity, Pillar>(x)).ToList();
-                return items;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var items = _mapper.Map<IEnumerable<PillarEntity>, List<Pillar>>(_items);
+            return items;
         }
 
         public void UpdateItem(Pillar item)

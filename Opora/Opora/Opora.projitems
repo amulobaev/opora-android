@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)AutoMapperConfigurationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bindings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomContentPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\BaseEntity.cs" />
