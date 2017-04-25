@@ -6,7 +6,7 @@ using Opora.Models;
 
 namespace Opora
 {
-    public class AutoMapperConfigurationProvider : Provider<IConfigurationProvider>
+    public class MapperConfigurationProvider : Provider<IConfigurationProvider>
     {
         protected override IConfigurationProvider CreateInstance(IContext context)
         {

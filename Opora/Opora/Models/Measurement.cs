@@ -9,6 +9,8 @@ namespace Opora.Models
     {
         private double _height;
         private double _taper;
+        private double _measurement1;
+        private double _measurement2;
 
         public Pillar Pillar { get; set; }
 
@@ -33,11 +35,19 @@ namespace Opora.Models
         /// <summary>
         /// Первое измерение
         /// </summary>
-        public double H1 { get; set; }
+        public double Measurement1
+        {
+            get { return _measurement1; }
+            set { Set(() => Measurement1, ref _measurement1, value); }
+        }
 
         /// <summary>
         /// Второе измерение
         /// </summary>
-        public double H2 { get; set; }
+        public double Measurement2
+        {
+            get { return _measurement2; }
+            set { Set(() => Measurement2, ref _measurement2, value); }
+        }
     }
 }

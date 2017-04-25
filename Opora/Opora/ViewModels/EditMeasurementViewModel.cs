@@ -31,7 +31,10 @@ namespace Opora.ViewModels
 
             Title = "Замер";
 
-            //Item = item;
+            MessagingCenter.Subscribe<MeasurementsViewModel, Measurement>(this, "EditMeasurement", (obj, item) =>
+            {
+                Item = item;                
+            });
 
             // TODO
             Height = X = H1 = H2 = Result = (0.0).ToString("F1");
@@ -109,6 +112,9 @@ namespace Opora.ViewModels
 
         protected override void Save()
         {
+            Item.Pillar = SelectedPillar;
+            Item.UpdatedAt = DateTime.Now;
+
             MessagingCenter.Send(this, "AddItem", Item);
             Page.Navigation.PopToRootAsync();
         }

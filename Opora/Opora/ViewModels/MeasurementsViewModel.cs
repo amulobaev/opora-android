@@ -6,6 +6,7 @@ using Xamarin.Forms;
 
 using Opora.Models;
 using Opora.Views;
+using System;
 
 namespace Opora.ViewModels
 {
@@ -22,11 +23,10 @@ namespace Opora.ViewModels
 			Title = "Замеры";
 			Items = new ObservableCollection<Measurement>();
 
-			MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", async (obj, item) =>
+			MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", (obj, item) =>
 			{
 				var _item = item as Measurement;
 				Items.Add(_item);
-				//await DataStore.AddItemAsync(_item);
 			});
         }
 
@@ -44,9 +44,9 @@ namespace Opora.ViewModels
 
                 if (SelectedItem == null)
                     return;
-                var page = new EditMeasurementPage();
                 // Здесь передать данные о замере
-                Page.Navigation.PushAsync(page);
+                Page.Navigation.PushAsync(new EditMeasurementPage());
+                MessagingCenter.Send(this, "EditMeasurement", SelectedItem);
 
                 // Manually deselect item
                 SelectedItem = null;
@@ -62,13 +62,17 @@ namespace Opora.ViewModels
 
         private void AddItem()
         {
-            Measurement item = new Measurement
+            Page.Navigation.PushAsync(new EditMeasurementPage());
+
+            DateTime now = DateTime.Now;
+            var measurement = new Measurement
             {
-                //Id = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
+                CreatedAt = now,
+                UpdatedAt = now,
             };
-            var page = new EditMeasurementPage();
-            // Здесь передать данные о замере
-            Page.Navigation.PushAsync(page);
+
+            MessagingCenter.Send(this, "EditMeasurement", measurement);
         }
     }
 }

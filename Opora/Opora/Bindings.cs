@@ -18,8 +18,7 @@ namespace Opora
             Bind<PillarsViewModel>().ToSelf();
             Bind<IRepository<Measurement, Guid>>().To<MeasurementRepository>().InSingletonScope();
             Bind<IRepository<Pillar, Guid>>().To<PillarRepository>().InSingletonScope();
-
-            Bind<IConfigurationProvider>().ToProvider<AutoMapperConfigurationProvider>().InSingletonScope();
+            Bind<IConfigurationProvider>().ToProvider<MapperConfigurationProvider>().InSingletonScope();
             Bind<IMapper>().ToMethod(context => context.Kernel.Get<IConfigurationProvider>().CreateMapper());
         }
     }
