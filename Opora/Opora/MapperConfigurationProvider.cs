@@ -14,6 +14,8 @@ namespace Opora
             {
                 cfg.CreateMap<Pillar, PillarEntity>();
                 cfg.CreateMap<PillarEntity, Pillar>();
+                cfg.CreateMap<Measurement, MeasurementEntity>();
+                cfg.CreateMap<MeasurementEntity, Measurement>();
             });
             return config;
         }

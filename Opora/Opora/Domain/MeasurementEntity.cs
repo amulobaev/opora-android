@@ -8,10 +8,10 @@ namespace Opora.Domain
 
         public double Height { get; set; }
 
-        public double X { get; set; }
+        public double Taper { get; set; }
 
-        public double H1 { get; set; }
+        public double Measurement1 { get; set; }
 
-        public double H2 { get; set; }
+        public double Measurement2 { get; set; }
     }
 }

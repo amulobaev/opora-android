@@ -7,6 +7,8 @@ using Xamarin.Forms;
 using Opora.Models;
 using Opora.Views;
 using System;
+using Opora.Domain;
+using System.Linq;
 
 namespace Opora.ViewModels
 {
@@ -14,20 +16,30 @@ namespace Opora.ViewModels
 	{
         private ICommand _addItemCommand;
         private Measurement _selectedItem;
+        private IRepository<Measurement, Guid> _repository;
 
         /// <summary>
         /// Конструктор
         /// </summary>
-		public MeasurementsViewModel()
+        public MeasurementsViewModel(IRepository<Measurement, Guid> repository)
 		{
-			Title = "Замеры";
+            _repository = repository;
+
+            Title = "Замеры";
 			Items = new ObservableCollection<Measurement>();
 
 			MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", (obj, item) =>
 			{
-				var _item = item as Measurement;
-				Items.Add(_item);
-			});
+                if (Items.Any(x => x.Id == item.Id))
+                {
+                    _repository.UpdateItem(item);
+                }
+                else
+                {
+                    Items.Add(item);
+                    _repository.AddItem(item);
+                }
+            });
         }
 
         public ObservableCollection<Measurement> Items { get; set; }
