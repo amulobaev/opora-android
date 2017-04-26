@@ -20,7 +20,13 @@ namespace Opora.Domain
             _items = new List<PillarEntity>()
             {
                 new PillarEntity {Name = "СС 156.6", Height = 15.6, Taper = 11.7 },
-                new PillarEntity {Name = "СС 136.6", Height = 13.6, Taper = 10.1 }
+                new PillarEntity {Name = "СС 136.6", Height = 13.6, Taper = 10.1 },
+                new PillarEntity {Name = "СО 108.6", Height = 10.8, Taper = 8 },
+                new PillarEntity {Name = "ССА-100.6-3", Height = 10, Taper = 7.25 },
+                new PillarEntity {Name = "СП 104.6", Height = 10.4, Taper = 7.75 },
+                new PillarEntity {Name = "М1-10-60", Height = 9.6, Taper = 12 },
+                new PillarEntity {Name = "МГК1-12-100С", Height = 12, Taper = 0 },
+                new PillarEntity {Name = "МШ-10-60", Height = 12, Taper = 15 },
             };
         }
 

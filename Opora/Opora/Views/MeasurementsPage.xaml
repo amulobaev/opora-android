@@ -23,15 +23,15 @@
           <DataTemplate>
             <ViewCell>
               <StackLayout Padding="10">
+                <Label Text="{Binding UpdatedAt, StringFormat='{0:d-MM-yyyy HH:mm:ss}'}"
+                       LineBreakMode="NoWrap"
+                       Style="{DynamicResource ListItemDetailTextStyle}"
+                       FontSize="13"/>
                 <Label Text="{Binding Pillar.Name}"
                        LineBreakMode="NoWrap"
                        Style="{DynamicResource ListItemTextStyle}"
                        FontSize="16"/>
-                <Label Text="{Binding UpdatedAt}"
-                       LineBreakMode="NoWrap"
-                       Style="{DynamicResource ListItemDetailTextStyle}"
-                       FontSize="13"/>
-              </StackLayout>
+             </StackLayout>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
