@@ -24,6 +24,7 @@ namespace Opora.ViewModels
         private ICommand _calculateCommand;
         private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
         private IRepository<Pillar, Guid> _repository;
+        private string _warning;
 
         public EditMeasurementViewModel(IRepository<Pillar, Guid> repository)
         {
@@ -115,6 +116,12 @@ namespace Opora.ViewModels
             get { return _calculateCommand ?? (_calculateCommand = new RelayCommand(Calculate)); }
         }
 
+        public string Warning
+        {
+            get { return _warning; }
+            set { Set(() => Warning, ref _warning, value); }
+        }
+
         protected override void Save()
         {
             if (SelectedPillar == null)
@@ -169,6 +176,7 @@ namespace Opora.ViewModels
 
             double result = taper - Math.Abs(measurement1 - measurement2) * height;
             Result = result.ToString();
+            Warning = result > 12 ? "Требуется выправка или замена опоры контактной сети" : string.Empty;
         }
 
         public override void RaisePropertyChanged([CallerMemberName] string propertyName = null)
