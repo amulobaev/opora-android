@@ -16,9 +16,9 @@ namespace Opora.ViewModels
     public class EditMeasurementViewModel : EditorViewModel<Measurement>
     {
         private string _height;
-        private string _x;
-        private string _h1;
-        private string _h2;
+        private string _taper;
+        private string _measurement1;
+        private string _measurement2;
         private string _result;
         private Pillar _selectedPillar;
         private ICommand _calculateCommand;
@@ -31,13 +31,8 @@ namespace Opora.ViewModels
 
             Title = "Замер";
 
-            MessagingCenter.Subscribe<MeasurementsViewModel, Measurement>(this, "EditMeasurement", (obj, item) =>
-            {
-                Item = item;                
-            });
-
             // TODO
-            Height = X = H1 = H2 = Result = (0.0).ToString("F1");
+            Height = Taper = Measurement1 = Measurement2 = Result = (0.0).ToString("F1");
 
             var pillars = _repository.GetItems().ToList();
             if (pillars.Any())
@@ -47,6 +42,16 @@ namespace Opora.ViewModels
                     _pillars.Add(item);
                 }
             }
+
+            MessagingCenter.Subscribe<MeasurementsViewModel, Measurement>(this, "EditMeasurement", (obj, item) =>
+            {
+                Item = item;
+                SelectedPillar = item.Pillar != null ? _pillars.FirstOrDefault(x => x.Id == item.Pillar.Id) : null;
+                Height = item.Height.ToString();
+                Taper = item.Taper.ToString();
+                Measurement1 = item.Measurement1.ToString();
+                Measurement2 = item.Measurement2.ToString();
+            });
         }
 
         public ObservableCollection<Pillar> Pillars
@@ -67,7 +72,7 @@ namespace Opora.ViewModels
                 if (SelectedPillar != null)
                 {
                     Height = SelectedPillar.Height.ToString();
-                    X = SelectedPillar.Taper.ToString();
+                    Taper = SelectedPillar.Taper.ToString();
                 }
             }
         }
@@ -81,22 +86,22 @@ namespace Opora.ViewModels
             set { Set(() => Height, ref _height, value); }
         }
 
-        public string X
+        public string Taper
         {
-            get { return _x; }
-            set { Set(() => X, ref _x, value); }
+            get { return _taper; }
+            set { Set(() => Taper, ref _taper, value); }
         }
 
-        public string H1
+        public string Measurement1
         {
-            get { return _h1; }
-            set { Set(() => H1, ref _h1, value); }
+            get { return _measurement1; }
+            set { Set(() => Measurement1, ref _measurement1, value); }
         }
 
-        public string H2
+        public string Measurement2
         {
-            get { return _h2; }
-            set { Set(() => H2, ref _h2, value); }
+            get { return _measurement2; }
+            set { Set(() => Measurement2, ref _measurement2, value); }
         }
 
         public string Result
@@ -112,7 +117,41 @@ namespace Opora.ViewModels
 
         protected override void Save()
         {
+            if (SelectedPillar == null)
+            {
+                Page.DisplayAlert("Замер", "Не указана марка опоры", "OK");
+                return;
+            }
+            double height;
+            if (!Helpers.TryParse(Height, out height))
+            {
+                Page.DisplayAlert("Замер", "Высота опоры указана неверно", "OK");
+                return;
+            }
+            double taper;
+            if (!Helpers.TryParse(Taper, out taper))
+            {
+                Page.DisplayAlert("Замер", "Конусность опоры указана неверно", "OK");
+                return;
+            }
+            double measurement1;
+            if (!Helpers.TryParse(Measurement1, out measurement1))
+            {
+                Page.DisplayAlert("Замер", "Первое измерение указано неверно", "OK");
+                return;
+            }
+            double measurement2;
+            if (!Helpers.TryParse(Measurement2, out measurement2))
+            {
+                Page.DisplayAlert("Замер", "Второе измерение указано неверно", "OK");
+                return;
+            }
+
             Item.Pillar = SelectedPillar;
+            Item.Height = height;
+            Item.Taper = taper;
+            Item.Measurement1 = measurement1;
+            Item.Measurement2 = measurement2;
             Item.UpdatedAt = DateTime.Now;
 
             MessagingCenter.Send(this, "AddItem", Item);
@@ -121,14 +160,14 @@ namespace Opora.ViewModels
 
         private void Calculate()
         {
-            double height, h1, h2, x;
-            if (!Helpers.TryParse(Height, out height) || !Helpers.TryParse(X, out x) || !Helpers.TryParse(H1, out h1) || !Helpers.TryParse(H2, out h2))
+            double height, taper, measurement1, measurement2;
+            if (!Helpers.TryParse(Height, out height) || !Helpers.TryParse(Taper, out taper) || !Helpers.TryParse(Measurement1, out measurement1) || !Helpers.TryParse(Measurement2, out measurement2))
             {
                 Page.DisplayAlert("Расчёт", "Неверные исходные данные", "OK");
                 return;
             }
 
-            double result = x - Math.Abs(h1 - h2) * height;
+            double result = taper - Math.Abs(measurement1 - measurement2) * height;
             Result = result.ToString();
         }
 

@@ -14,11 +14,11 @@
             <Label Text="Высота опоры" FontSize="Small" />
             <Entry Text="{Binding Height, Mode=TwoWay}" FontSize="Small" />
             <Label Text="Конусность опоры" FontSize="Small" />
-            <Editor Text="{Binding X, Mode=TwoWay}" FontSize="Small" Margin="0" />
+            <Editor Text="{Binding Taper, Mode=TwoWay}" FontSize="Small" Margin="0" />
             <Label Text="Первое измерение" FontSize="Small" />
-            <Editor Text="{Binding H1}" FontSize="Small" Margin="0" />
+            <Editor Text="{Binding Measurement1}" FontSize="Small" Margin="0" />
             <Label Text="Второе измерение" FontSize="Small" />
-            <Editor Text="{Binding H2}" FontSize="Small" Margin="0" />
+            <Editor Text="{Binding Measurement2}" FontSize="Small" Margin="0" />
             <Button Margin="1" Text="Расчёт" BackgroundColor="{StaticResource Primary}" TextColor="White" Command="{Binding CalculateCommand}" />
             <Label Text="Угол наклона" FontSize="Small" />
             <Editor Text="{Binding Result}" FontSize="Small" Margin="0" />
