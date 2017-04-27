@@ -20,6 +20,7 @@ namespace Opora
             Bind<IRepository<Pillar, Guid>>().To<PillarRepository>().InSingletonScope();
             Bind<IConfigurationProvider>().ToProvider<MapperConfigurationProvider>().InSingletonScope();
             Bind<IMapper>().ToMethod(context => context.Kernel.Get<IConfigurationProvider>().CreateMapper());
+            Bind<IDatabase>().To<OporaDatabase>().InSingletonScope();
         }
     }
 }
