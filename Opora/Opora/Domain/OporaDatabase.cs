@@ -22,7 +22,7 @@ namespace Opora.Domain
 
         public void AddItem<T>(T item)
         {
-            
+            database.Insert(item);
         }
 
         public void DeleteItem<T>(Guid id)
@@ -42,7 +42,7 @@ namespace Opora.Domain
 
         public void UpdateItem<T>(T item)
         {
-            
+            database.Update(item);
         }
     }
 }
