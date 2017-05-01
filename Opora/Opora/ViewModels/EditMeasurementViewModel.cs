@@ -19,6 +19,7 @@ namespace Opora.ViewModels
         private string _taper;
         private string _measurement1;
         private string _measurement2;
+        private string _location;
         private string _result;
         private Pillar _selectedPillar;
         private ICommand _calculateCommand;
@@ -52,6 +53,7 @@ namespace Opora.ViewModels
                 Taper = item.Taper.ToString();
                 Measurement1 = item.Measurement1.ToString();
                 Measurement2 = item.Measurement2.ToString();
+                Location = item.Location;
             });
         }
 
@@ -103,6 +105,12 @@ namespace Opora.ViewModels
         {
             get { return _measurement2; }
             set { Set(() => Measurement2, ref _measurement2, value); }
+        }
+
+        public string Location
+        {
+            get { return _location; }
+            set { Set(() => Location, ref _location, value); }
         }
 
         public string Result

@@ -9,6 +9,9 @@ using Opora.Views;
 using System;
 using Opora.Domain;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using Plugin.Geolocator;
 
 namespace Opora.ViewModels
 {
@@ -72,9 +75,9 @@ namespace Opora.ViewModels
             get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem)); }
         }
 
-        private void AddItem()
+        private async void AddItem()
         {
-            Page.Navigation.PushAsync(new EditMeasurementPage());
+            await Page.Navigation.PushAsync(new EditMeasurementPage());
 
             DateTime now = DateTime.Now;
             var measurement = new Measurement
@@ -82,9 +85,32 @@ namespace Opora.ViewModels
                 Id = Guid.NewGuid(),
                 CreatedAt = now,
                 UpdatedAt = now,
+                Location = await GetLocation()
             };
 
             MessagingCenter.Send(this, "EditMeasurement", measurement);
+        }
+
+        private async Task<string> GetLocation()
+        {
+            try
+            {
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 50;
+
+                var position = await locator.GetPositionAsync(10000);
+
+                Debug.WriteLine("Position Status: {0}", position.Timestamp);
+                Debug.WriteLine("Position Latitude: {0}", position.Latitude);
+                Debug.WriteLine("Position Longitude: {0}", position.Longitude);
+
+                return string.Format("{0}, {1}", position.Latitude, position.Longitude);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Unable to get location, may need to increase timeout: " + ex);
+                return null;
+            }
         }
     }
 }

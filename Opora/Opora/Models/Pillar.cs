@@ -42,5 +42,7 @@ namespace Opora.Models
         {
             return Name;
         }
+
+
     }
 }

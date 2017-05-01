@@ -12,7 +12,6 @@ namespace Opora.Domain
     {
         private readonly IMapper _mapper;
         private readonly IRepository<Pillar, Guid> _pillarRepository;
-        //private readonly List<MeasurementEntity> _items;
         private readonly IDatabase _database;
 
         public MeasurementRepository(IMapper mapper, IRepository<Pillar, Guid> pillarRepository, IDatabase database)
@@ -20,15 +19,12 @@ namespace Opora.Domain
             _mapper = mapper;
             _pillarRepository = pillarRepository;
             _database = database;
-
-            //_items = new List<MeasurementEntity>();
         }
 
         public void AddItem(Measurement item)
         {
             var entity = _mapper.Map<MeasurementEntity>(item);
             _database.AddItem<MeasurementEntity>(entity);
-            //_items.Add(entity);
         }
 
         public void DeleteItem(Guid id)
@@ -38,7 +34,6 @@ namespace Opora.Domain
 
         public Measurement GetItem(Guid id)
         {
-            //var entity = _items.FirstOrDefault(x => x.Id == id);
             var entity = _database.GetItem<MeasurementEntity>(id);
             if (entity != null)
             {
@@ -54,7 +49,6 @@ namespace Opora.Domain
 
         public IEnumerable<Measurement> GetItems()
         {
-            //var items = new List<Measurement>();
             var items = new List<Measurement>();
             var entities = _database.GetItems<MeasurementEntity>().ToList();
             foreach (var entity in entities)

@@ -19,6 +19,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -49,7 +50,10 @@
             <Label Grid.Row="7" Text="Процентное соотношение:" FontSize="Small" VerticalOptions="Center" />
             <Editor Grid.Row="7" Grid.Column="1" FontSize="Small" Margin="0" />
 
-            <Label Grid.Row="8" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" Text="{Binding Warning}" FontSize="Small" TextColor="Red" />
+            <Label Grid.Row="8" Text="Координаты:" FontSize="Small" VerticalOptions="Center" />
+            <Editor Grid.Row="8" Grid.Column="1" Text="{Binding Location}" FontSize="Small" Margin="0" />
+
+            <Label Grid.Row="9" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" Text="{Binding Warning}" FontSize="Small" TextColor="Red" />
         </Grid>
 
     </ContentPage.Content>
