@@ -26,6 +26,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Domain\IDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\OporaDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISave.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MapperConfigurationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bindings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomContentPage.cs" />

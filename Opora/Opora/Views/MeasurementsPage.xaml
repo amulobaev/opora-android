@@ -5,12 +5,13 @@
              x:Class="Opora.Views.MeasurementsPage"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage">
-  <ContentPage.ToolbarItems>
-  	<ToolbarItem Text="Добавить замер" Command="{Binding AddItemCommand}"/>
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <StackLayout>
-      <ListView x:Name="ItemsListView"
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить замер" Command="{Binding AddItemCommand}"/>
+        <ToolbarItem Text="Экспорт" Command="{Binding ExportCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="ItemsListView"
 				ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
@@ -19,23 +20,23 @@
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 CachingStrategy="RecycleElement"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout Padding="10">
-                <Label Text="{Binding UpdatedAt, StringFormat='{0:d-MM-yyyy HH:mm:ss}'}"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding UpdatedAt, StringFormat='{0:d-MM-yyyy HH:mm:ss}'}"
                        LineBreakMode="NoWrap"
                        Style="{DynamicResource ListItemDetailTextStyle}"
                        FontSize="13"/>
-                <Label Text="{Binding Pillar.Name}"
+                                <Label Text="{Binding Pillar.Name}"
                        LineBreakMode="NoWrap"
                        Style="{DynamicResource ListItemTextStyle}"
                        FontSize="16"/>
-             </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-    </StackLayout> 
-  </ContentPage.Content>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
 </controls:CustomContentPage>

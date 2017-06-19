@@ -1,6 +1,7 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
+
 using Opora.Models;
-using System.Windows.Input;
 
 namespace Opora.ViewModels
 {
