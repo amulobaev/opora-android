@@ -24,7 +24,7 @@ namespace Opora.Domain
         public void AddItem(Measurement item)
         {
             var entity = _mapper.Map<MeasurementEntity>(item);
-            _database.AddItem<MeasurementEntity>(entity);
+            _database.AddItem(entity);
         }
 
         public void DeleteItem(Guid id)
@@ -35,16 +35,12 @@ namespace Opora.Domain
         public Measurement GetItem(Guid id)
         {
             var entity = _database.GetItem<MeasurementEntity>(id);
-            if (entity != null)
-            {
-                var item = _mapper.Map<Measurement>(entity);
-                item.Pillar = _pillarRepository.GetItem(entity.PillarId);                
-                return item;
-            }
-            else
-            {
+            if (entity == null)
                 return null;
-            }
+
+            var item = _mapper.Map<Measurement>(entity);
+            item.Pillar = _pillarRepository.GetItem(entity.PillarId);
+            return item;
         }
 
         public IEnumerable<Measurement> GetItems()
@@ -62,16 +58,8 @@ namespace Opora.Domain
 
         public void UpdateItem(Measurement item)
         {
-            //var itemToUpdate = _items.FirstOrDefault(x => x.Id == item.Id);
-            //if (itemToUpdate != null)
-            //{
-            //    itemToUpdate.PillarId = item.Pillar.Id;
-            //    itemToUpdate.Height = item.Height;
-            //    itemToUpdate.Taper = item.Taper;
-            //    itemToUpdate.Measurement1 = item.Measurement1;
-            //    itemToUpdate.Measurement2 = item.Measurement2;
-            //    itemToUpdate.UpdatedAt = item.UpdatedAt;
-            //}
+            var entity = _mapper.Map<MeasurementEntity>(item);
+            _database.UpdateItem(entity);
         }
     }
 }

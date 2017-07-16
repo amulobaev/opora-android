@@ -1,48 +1,47 @@
-﻿using SQLite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using SQLite;
 
 namespace Opora.Domain
 {
     public class OporaDatabase : IDatabase
     {
-        private readonly SQLiteConnection database;
+        private readonly SQLiteConnection _database;
 
         public OporaDatabase()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string dbPath = Path.Combine(path, "opora.db3");
-            database = new SQLiteConnection(dbPath);
-            database.CreateTable<MeasurementEntity>();
-            database.CreateTable<PillarEntity>();
+
+            _database = new SQLiteConnection(dbPath);
+            _database.CreateTable<MeasurementEntity>();
+            _database.CreateTable<PillarEntity>();
         }
 
         public void AddItem<T>(T item)
         {
-            database.Insert(item);
+            _database.Insert(item);
         }
 
         public void DeleteItem<T>(Guid id)
         {
-            
         }
 
-        public T GetItem<T>(Guid id) where T : new()
+        public T GetItem<T>(Guid id) where T : BaseEntity, new()
         {
-            return database.Get<T>(id);
+            return _database.Table<T>().FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<T> GetItems<T>() where T : new()
         {
-            return database.Table<T>().ToList();
+            return _database.Table<T>().ToList();
         }
 
         public void UpdateItem<T>(T item)
         {
-            database.Update(item);
+            _database.Update(item);
         }
     }
 }

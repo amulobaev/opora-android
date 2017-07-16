@@ -1,21 +1,21 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 using GalaSoft.MvvmLight.Command;
+using Plugin.Geolocator;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using Syncfusion.XlsIO;
 using Xamarin.Forms;
 
 using Opora.Models;
 using Opora.Views;
-using System;
 using Opora.Domain;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using Plugin.Geolocator;
-using System.IO;
-using Syncfusion.XlsIO;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 
 namespace Opora.ViewModels
 {
@@ -23,34 +23,31 @@ namespace Opora.ViewModels
     {
         private ICommand _addItemCommand;
         private Measurement _selectedItem;
-        private IRepository<Measurement, Guid> _repository;
+        private readonly IRepository<Measurement, Guid> _measurementRepository;
         private ICommand _exportCommand;
+        private readonly ObservableCollection<Measurement> _items = new ObservableCollection<Measurement>();
 
         /// <summary>
         /// Конструктор
         /// </summary>
-        public MeasurementsViewModel(IRepository<Measurement, Guid> repository)
+        public MeasurementsViewModel(IRepository<Measurement, Guid> measurementRepository)
         {
-            _repository = repository;
+            _measurementRepository = measurementRepository;
 
             Title = "Замеры";
-            Items = new ObservableCollection<Measurement>();
 
-            MessagingCenter.Subscribe<EditMeasurementViewModel, Measurement>(this, "AddItem", (obj, item) =>
+            Update();
+
+            MessagingCenter.Subscribe<EditMeasurementViewModel>(this, "UpdateMeasurements", obj =>
             {
-                if (Items.Any(x => x.Id == item.Id))
-                {
-                    _repository.UpdateItem(item);
-                }
-                else
-                {
-                    Items.Add(item);
-                    _repository.AddItem(item);
-                }
+                Update();
             });
         }
 
-        public ObservableCollection<Measurement> Items { get; set; }
+        public ObservableCollection<Measurement> Items
+        {
+            get { return _items; }
+        }
 
         public Measurement SelectedItem
         {
@@ -85,6 +82,24 @@ namespace Opora.ViewModels
             get { return _exportCommand ?? (_exportCommand = new RelayCommand(Export)); }
         }
 
+        private void Update()
+        {
+            IsBusy = true;
+
+            Items.Clear();
+
+            var items = _measurementRepository.GetItems().ToList();
+            if (items.Any())
+            {
+                foreach (Measurement item in items)
+                {
+                    Items.Add(item);
+                }
+            }
+
+            IsBusy = false;
+        }
+
         private async void AddItem()
         {
             await Page.Navigation.PushAsync(new EditMeasurementPage());
@@ -109,11 +124,6 @@ namespace Opora.ViewModels
                 locator.DesiredAccuracy = 50;
 
                 var position = await locator.GetPositionAsync(10000);
-
-                Debug.WriteLine("Position Status: {0}", position.Timestamp);
-                Debug.WriteLine("Position Latitude: {0}", position.Latitude);
-                Debug.WriteLine("Position Longitude: {0}", position.Longitude);
-
                 return string.Format("{0}, {1}", position.Latitude, position.Longitude);
             }
             catch (Exception ex)

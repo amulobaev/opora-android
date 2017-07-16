@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Windows.Input;
-
+using Opora.Domain;
 using Xamarin.Forms;
-using GalaSoft.MvvmLight.Command;
-
 using Opora.Models;
 
 namespace Opora.ViewModels
@@ -13,12 +10,15 @@ namespace Opora.ViewModels
     /// </summary>
     public class EditPillarViewModel : EditorViewModel<Pillar>
     {
+        private readonly IRepository<Pillar, Guid> _pillarRepository;
         private string _name;
         private string _height;
         private string _taper;
 
-        public EditPillarViewModel()
+        public EditPillarViewModel(IRepository<Pillar, Guid> pillarRepository)
         {
+            _pillarRepository = pillarRepository;
+
             Title = "Опора";
 
             MessagingCenter.Subscribe<PillarsViewModel, Pillar>(this, "EditPillar", (obj, item) =>
@@ -79,7 +79,17 @@ namespace Opora.ViewModels
             Item.Taper = taper;
             Item.UpdatedAt = DateTime.Now;
 
-            MessagingCenter.Send(this, "AddItem", Item);
+            // Сохранение в базе
+            if (_pillarRepository.GetItem(Item.Id) == null)
+            {
+                _pillarRepository.AddItem(Item);
+            }
+            else
+            {
+                _pillarRepository.UpdateItem(Item);
+            }
+
+            MessagingCenter.Send(this, "UpdatePillars");
             Page.Navigation.PopToRootAsync();
         }
     }

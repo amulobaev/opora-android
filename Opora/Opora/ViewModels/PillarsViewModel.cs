@@ -14,46 +14,29 @@ namespace Opora.ViewModels
 {
     public class PillarsViewModel : PageViewModel
 	{
-        private IRepository<Pillar, Guid> _repository;
+        private IRepository<Pillar, Guid> _pillarRepository;
         private Pillar _selectedItem;
         private ICommand _addItemCommand;
 
         /// <summary>
         /// Конструктор
         /// </summary>
-        public PillarsViewModel(IRepository<Pillar, Guid> repository)
+        public PillarsViewModel(IRepository<Pillar, Guid> pillarRepository)
 		{
-            _repository = repository;
+            _pillarRepository = pillarRepository;
 
             Title = "Опоры";
 			Items = new ObservableCollection<Pillar>();
 
-            var items = _repository.GetItems().ToList();
-            if (items.Any())
-            {
-                IsBusy = true;
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
-                IsBusy = false;
-            }
+            Update();
 
-            MessagingCenter.Subscribe<EditPillarViewModel, Pillar>(this, "AddItem", (obj, item) =>
+		    MessagingCenter.Subscribe<EditPillarViewModel>(this, "UpdatePillars", obj =>
 			{
-                if (Items.Any(x => x.Id == item.Id))
-                {
-                    _repository.UpdateItem(item);
-                }
-                else
-                {
-                    Items.Add(item);
-                    _repository.AddItem(item);
-                }
+                Update();
 			});
 		}
 
-        public ObservableCollection<Pillar> Items { get; set; }
+	    public ObservableCollection<Pillar> Items { get; set; }
 
         public Command LoadItemsCommand { get; set; }
 
@@ -81,6 +64,24 @@ namespace Opora.ViewModels
                 SelectedItem = null;
             }
         }
+
+	    private void Update()
+	    {
+	        IsBusy = true;
+
+            Items.Clear();
+
+            var items = _pillarRepository.GetItems().ToList();
+	        if (items.Any())
+	        {
+	            foreach (var item in items)
+	            {
+	                Items.Add(item);
+	            }
+	        }
+
+	        IsBusy = false;
+	    }
 
         private void AddItem()
         {

@@ -10,5 +10,13 @@ namespace Opora.ViewModels
         public virtual void Dispose()
         {
         }
+
+        public void DisplayAlert(string message)
+        {
+            if (Page == null)
+                return;
+
+            Page.DisplayAlert("Замер", message, "OK");
+        }
     }
 }

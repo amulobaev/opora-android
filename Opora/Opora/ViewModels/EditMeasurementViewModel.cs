@@ -1,15 +1,13 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 using GalaSoft.MvvmLight.Command;
 using Xamarin.Forms;
 
 using Opora.Models;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using System.Linq.Expressions;
 using Opora.Domain;
-using System.Linq;
 
 namespace Opora.ViewModels
 {
@@ -24,19 +22,21 @@ namespace Opora.ViewModels
         private Pillar _selectedPillar;
         private ICommand _calculateCommand;
         private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
-        private IRepository<Pillar, Guid> _repository;
+        private readonly IRepository<Pillar, Guid> _pillarRepository;
+        private readonly IRepository<Measurement, Guid> _measurementRepository;
         private string _warning;
 
-        public EditMeasurementViewModel(IRepository<Pillar, Guid> repository)
+        public EditMeasurementViewModel(IRepository<Pillar, Guid> pillarRepository, IRepository<Measurement, Guid> measurementRepository)
         {
-            _repository = repository;
+            _pillarRepository = pillarRepository;
+            _measurementRepository = measurementRepository;
 
             Title = "Замер";
 
             // TODO
             Height = Taper = Measurement1 = Measurement2 = Result = (0.0).ToString("F1");
 
-            var pillars = _repository.GetItems().ToList();
+            var pillars = _pillarRepository.GetItems().ToList();
             if (pillars.Any())
             {
                 foreach (var item in pillars)
@@ -134,31 +134,31 @@ namespace Opora.ViewModels
         {
             if (SelectedPillar == null)
             {
-                Page.DisplayAlert("Замер", "Не указана марка опоры", "OK");
+                DisplayAlert("Не указана марка опоры");
                 return;
             }
             double height;
             if (!Helpers.TryParse(Height, out height))
             {
-                Page.DisplayAlert("Замер", "Высота опоры указана неверно", "OK");
+                DisplayAlert("Высота опоры указана неверно");
                 return;
             }
             double taper;
             if (!Helpers.TryParse(Taper, out taper))
             {
-                Page.DisplayAlert("Замер", "Конусность опоры указана неверно", "OK");
+                DisplayAlert("Конусность опоры указана неверно");
                 return;
             }
             double measurement1;
             if (!Helpers.TryParse(Measurement1, out measurement1))
             {
-                Page.DisplayAlert("Замер", "Первое измерение указано неверно", "OK");
+                DisplayAlert("Первое измерение указано неверно");
                 return;
             }
             double measurement2;
             if (!Helpers.TryParse(Measurement2, out measurement2))
             {
-                Page.DisplayAlert("Замер", "Второе измерение указано неверно", "OK");
+                DisplayAlert("Второе измерение указано неверно");
                 return;
             }
 
@@ -169,32 +169,32 @@ namespace Opora.ViewModels
             Item.Measurement2 = measurement2;
             Item.UpdatedAt = DateTime.Now;
 
-            MessagingCenter.Send(this, "AddItem", Item);
+            // Сохранение в базе
+            if (_measurementRepository.GetItem(Item.Id) == null)
+            {
+                _measurementRepository.AddItem(Item);
+            }
+            else
+            {
+                _measurementRepository.UpdateItem(Item);
+            }
+
+            MessagingCenter.Send(this, "UpdateMeasurements");
             Page.Navigation.PopToRootAsync();
         }
-
+        
         private void Calculate()
         {
             double height, taper, measurement1, measurement2;
             if (!Helpers.TryParse(Height, out height) || !Helpers.TryParse(Taper, out taper) || !Helpers.TryParse(Measurement1, out measurement1) || !Helpers.TryParse(Measurement2, out measurement2))
             {
-                Page.DisplayAlert("Расчёт", "Неверные исходные данные", "OK");
+                DisplayAlert("Неверные исходные данные");
                 return;
             }
 
             double result = taper - Math.Abs(measurement1 - measurement2) * height;
             Result = result.ToString();
             Warning = result > 12 ? "Требуется выправка или замена опоры контактной сети" : string.Empty;
-        }
-
-        public override void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            base.RaisePropertyChanged(propertyName);
-        }
-
-        public override void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
-        {
-            base.RaisePropertyChanged<T>(propertyExpression);
         }
     }
 }
