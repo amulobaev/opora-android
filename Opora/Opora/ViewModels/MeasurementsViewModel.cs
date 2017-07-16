@@ -109,28 +109,10 @@ namespace Opora.ViewModels
             {
                 Id = Guid.NewGuid(),
                 CreatedAt = now,
-                UpdatedAt = now,
-                Location = await GetLocation()
+                UpdatedAt = now
             };
 
             MessagingCenter.Send(this, "EditMeasurement", measurement);
-        }
-
-        private async Task<string> GetLocation()
-        {
-            try
-            {
-                var locator = CrossGeolocator.Current;
-                locator.DesiredAccuracy = 50;
-
-                var position = await locator.GetPositionAsync(10000);
-                return string.Format("{0}, {1}", position.Latitude, position.Longitude);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Unable to get location, may need to increase timeout: " + ex);
-                return null;
-            }
         }
 
         private async void Export()
@@ -164,7 +146,7 @@ namespace Opora.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+                DisplayAlert(ex.Message);
             }
         }
 
@@ -183,42 +165,42 @@ namespace Opora.ViewModels
                 //Access first worksheet from the workbook instance.
                 IWorksheet worksheet = workbook.Worksheets[0];
 
-                //Enabling formula calculation.
-                //worksheet.EnableSheetCalculations();
-
-                worksheet["A1"].Text = "Items";
-                worksheet["B1"].Text = "Quantity";
-                worksheet["C1"].Text = "Rate";
-                worksheet["D1"].Text = "Taxes";
-                worksheet["E1"].Text = "Amount";
+                worksheet["A1"].Text = "N опоры";
+                worksheet["B1"].Text = "Марка опоры";
+                worksheet["C1"].Text = "Координаты опоры";
+                worksheet["D1"].Text = "Угол наклона";
+                worksheet["E1"].Text = "Max наклон опоры";
 
                 //Set the column width in points.
-                worksheet["A1:E1"].ColumnWidth = 10;
+                //worksheet["A1:E1"].ColumnWidth = 10;
 
                 //Set the style for header range.
                 IRange headingRange = worksheet["A1:E1"];
                 headingRange.CellStyle.Font.Bold = true;
                 headingRange.CellStyle.ColorIndex = ExcelKnownColors.Light_green;
 
-                worksheet["A2"].Text = "Product A";
-                worksheet["A3"].Text = "Product B";
-                worksheet["A4"].Text = "Product C";
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    var item = Items[i];
+                    // Марка опоры
+                    worksheet["B" + (2 + i)].Text = item.Pillar.Name;
+                    // Координаты опоры
+                    worksheet["С" + (2 + i)].Text = item.Position;
+                    // Угол наклона
+                    worksheet["D" + (2 + i)].Number = item.Angle;
+                }
 
-                worksheet["B2"].Number = 2;
-                worksheet["B3"].Number = 1;
-                worksheet["B4"].Number = 1;
+                //worksheet["A2"].Text = "Product A";
+                //worksheet["A3"].Text = "Product B";
+                //worksheet["A4"].Text = "Product C";
 
-                //Applying Number formats to the specified range
-                worksheet["C2:E4"].NumberFormat = "$##,##0.00";
+                //worksheet["B2"].Number = 2;
+                //worksheet["B3"].Number = 1;
+                //worksheet["B4"].Number = 1;
 
-                worksheet["C2"].Number = 99.00;
-                worksheet["C3"].Number = 199.00;
-                worksheet["C4"].Number = 149.00;
-
-                //Applying formulae
-                //worksheet["D2:D4"].FormulaR1C1 = "=(RC[-2]*RC[-1])*0.07";
-
-                //worksheet["E2:E4"].FormulaR1C1 = "=(RC[-3]*RC[-2])+RC[-1]";
+                //worksheet["C2"].Number = 99.00;
+                //worksheet["C3"].Number = 199.00;
+                //worksheet["C4"].Number = 149.00;
 
                 //Save the workbook to stream in xlsx format. 
                 try

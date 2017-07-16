@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -45,15 +46,18 @@
                     BackgroundColor="{StaticResource Primary}" TextColor="White" Command="{Binding CalculateCommand}" />
 
             <Label Grid.Row="6" Text="Угол наклона:" FontSize="Small" VerticalOptions="Center" />
-            <Editor Grid.Row="6" Grid.Column="1" Text="{Binding Result}" FontSize="Small" Margin="0" />
+            <Label Grid.Row="6" Grid.Column="1" Text="{Binding Angle}" FontSize="Small" VerticalOptions="Center" Margin="0" />
 
             <Label Grid.Row="7" Text="Процентное соотношение:" FontSize="Small" VerticalOptions="Center" />
             <Editor Grid.Row="7" Grid.Column="1" FontSize="Small" Margin="0" />
 
             <Label Grid.Row="8" Text="Координаты:" FontSize="Small" VerticalOptions="Center" />
-            <Editor Grid.Row="8" Grid.Column="1" Text="{Binding Location}" FontSize="Small" Margin="0" />
+            <Editor Grid.Row="8" Grid.Column="1" Text="{Binding Position}" FontSize="Small" Margin="0" />
 
-            <Label Grid.Row="9" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" Text="{Binding Warning}" FontSize="Small" TextColor="Red" />
+            <Button Grid.Row="9" Grid.ColumnSpan="2" Margin="1" Text="Получить координаты"
+                    BackgroundColor="{StaticResource Primary}" TextColor="White" Command="{Binding GetPositionCommand}" />
+
+            <Label Grid.Row="10" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" Text="{Binding Warning}" FontSize="Small" TextColor="Red" />
         </Grid>
 
     </ContentPage.Content>

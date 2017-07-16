@@ -14,6 +14,8 @@ namespace Opora.Domain
 
         public double Measurement2 { get; set; }
 
-        public string Location { get; set; }
+        public double Angle { get; set; }
+
+        public string Position { get; set; }
     }
 }

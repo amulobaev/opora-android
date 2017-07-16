@@ -11,7 +11,8 @@ namespace Opora.Models
         private double _taper;
         private double _measurement1;
         private double _measurement2;
-        private string _location;
+        private double _angle;
+        private string _position;
 
         public Pillar Pillar { get; set; }
 
@@ -51,10 +52,19 @@ namespace Opora.Models
             set { Set(() => Measurement2, ref _measurement2, value); }
         }
 
-        public string Location
+        /// <summary>
+        /// Угол наклона
+        /// </summary>
+        public double Angle
         {
-            get { return _location; }
-            set { Set(() => Location, ref _location, value); }
+            get { return _angle; }
+            set { Set(() => Angle, ref _angle, value); }
+        }
+
+        public string Position
+        {
+            get { return _position; }
+            set { Set(() => Position, ref _position, value); }
         }
     }
 }

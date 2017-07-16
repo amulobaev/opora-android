@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Android.Content;
 using Java.IO;
 using Xamarin.Forms;
 using Opora.Droid;
@@ -22,6 +23,17 @@ namespace Opora.Droid
 
             outs.Flush();
             outs.Close();
+
+            //Invoke the created file for viewing
+            if (file.Exists())
+            {
+                Android.Net.Uri path2 = Android.Net.Uri.FromFile(file);
+                string extension = Android.Webkit.MimeTypeMap.GetFileExtensionFromUrl(Android.Net.Uri.FromFile(file).ToString());
+                string mimeType = Android.Webkit.MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
+                Intent intent = new Intent(Intent.ActionView);
+                intent.SetDataAndType(path2, mimeType);
+                Forms.Context.StartActivity(Intent.CreateChooser(intent, "Открыть в"));
+            }
         }
     }
 }

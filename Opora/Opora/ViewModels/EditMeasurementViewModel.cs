@@ -8,6 +8,7 @@ using Xamarin.Forms;
 
 using Opora.Models;
 using Opora.Domain;
+using Plugin.Geolocator;
 
 namespace Opora.ViewModels
 {
@@ -17,14 +18,15 @@ namespace Opora.ViewModels
         private string _taper;
         private string _measurement1;
         private string _measurement2;
-        private string _location;
-        private string _result;
+        private string _position;
+        private double _angle;
         private Pillar _selectedPillar;
         private ICommand _calculateCommand;
         private readonly ObservableCollection<Pillar> _pillars = new ObservableCollection<Pillar>();
         private readonly IRepository<Pillar, Guid> _pillarRepository;
         private readonly IRepository<Measurement, Guid> _measurementRepository;
         private string _warning;
+        private ICommand _getPositionCommand;
 
         public EditMeasurementViewModel(IRepository<Pillar, Guid> pillarRepository, IRepository<Measurement, Guid> measurementRepository)
         {
@@ -34,7 +36,8 @@ namespace Opora.ViewModels
             Title = "Замер";
 
             // TODO
-            Height = Taper = Measurement1 = Measurement2 = Result = (0.0).ToString("F1");
+            Height = Taper = Measurement1 = Measurement2 = (0.0).ToString("F1");
+            Angle = 0.0;
 
             var pillars = _pillarRepository.GetItems().ToList();
             if (pillars.Any())
@@ -53,7 +56,8 @@ namespace Opora.ViewModels
                 Taper = item.Taper.ToString();
                 Measurement1 = item.Measurement1.ToString();
                 Measurement2 = item.Measurement2.ToString();
-                Location = item.Location;
+                Angle = item.Angle;
+                Position = item.Position;
             });
         }
 
@@ -107,21 +111,26 @@ namespace Opora.ViewModels
             set { Set(() => Measurement2, ref _measurement2, value); }
         }
 
-        public string Location
+        public string Position
         {
-            get { return _location; }
-            set { Set(() => Location, ref _location, value); }
+            get { return _position; }
+            set { Set(() => Position, ref _position, value); }
         }
 
-        public string Result
+        public double Angle
         {
-            get { return _result; }
-            set { Set(() => Result, ref _result, value); }
+            get { return _angle; }
+            set { Set(() => Angle, ref _angle, value); }
         }
 
         public ICommand CalculateCommand
         {
             get { return _calculateCommand ?? (_calculateCommand = new RelayCommand(Calculate)); }
+        }
+
+        public ICommand GetPositionCommand
+        {
+            get { return _getPositionCommand ?? (_getPositionCommand = new RelayCommand(GetPosition)); }
         }
 
         public string Warning
@@ -168,6 +177,8 @@ namespace Opora.ViewModels
             Item.Measurement1 = measurement1;
             Item.Measurement2 = measurement2;
             Item.UpdatedAt = DateTime.Now;
+            Item.Angle = Angle;
+            Item.Position = Position;
 
             // Сохранение в базе
             if (_measurementRepository.GetItem(Item.Id) == null)
@@ -182,7 +193,7 @@ namespace Opora.ViewModels
             MessagingCenter.Send(this, "UpdateMeasurements");
             Page.Navigation.PopToRootAsync();
         }
-        
+
         private void Calculate()
         {
             double height, taper, measurement1, measurement2;
@@ -192,9 +203,24 @@ namespace Opora.ViewModels
                 return;
             }
 
-            double result = taper - Math.Abs(measurement1 - measurement2) * height;
-            Result = result.ToString();
-            Warning = result > 12 ? "Требуется выправка или замена опоры контактной сети" : string.Empty;
+            Angle = taper - Math.Abs(measurement1 - measurement2) * height;
+            Warning = Angle > 12 ? "Требуется выправка или замена опоры контактной сети" : string.Empty;
+        }
+
+        private async void GetPosition()
+        {
+            try
+            {
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 10;
+
+                var position = await locator.GetPositionAsync(10000);
+                Position = string.Format("Ш {0:0.00000}, Д {1:0.00000}", position.Latitude, position.Longitude);
+            }
+            catch
+            {
+                DisplayAlert("Ошибка при определении местоположения");
+            }
         }
     }
 }
